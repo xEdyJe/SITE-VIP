@@ -63,17 +63,19 @@ export function SiteNav() {
               </button>
               
               {dropdownOpen && (
-                <div className="absolute top-full left-1/2 z-50 mt-1 w-56 -translate-x-1/2 rounded-2xl border border-dark/5 bg-white/95 p-2 shadow-lg backdrop-blur-md animate-fade-up duration-200">
-                  {communitiesDropdown.map((c) => (
-                    <Link
-                      key={c.href}
-                      to={c.href}
-                      className="block rounded-xl px-4 py-2.5 text-left text-xs font-bold uppercase tracking-wider text-dark/80 transition-colors hover:bg-indigo-brand/5 hover:text-indigo-brand"
-                      onClick={() => setDropdownOpen(false)}
-                    >
-                      {c.label}
-                    </Link>
-                  ))}
+                <div className="absolute top-full left-1/2 z-50 pt-2 w-56 -translate-x-1/2 animate-fade-up duration-200">
+                  <div className="rounded-2xl border border-dark/5 bg-white/95 p-2 shadow-lg backdrop-blur-md">
+                    {communitiesDropdown.map((c) => (
+                      <Link
+                        key={c.href}
+                        to={c.href}
+                        className="block rounded-xl px-4 py-2.5 text-left text-xs font-bold uppercase tracking-wider text-dark/80 transition-colors hover:bg-indigo-brand/5 hover:text-indigo-brand"
+                        onClick={() => setDropdownOpen(false)}
+                      >
+                        {c.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
