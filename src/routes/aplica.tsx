@@ -61,6 +61,21 @@ function AplicaPage() {
 
   const normalizeStr = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
 
+  const initialCommunity = community 
+    ? communities.find((c) => normalizeStr(c) === normalizeStr(community)) || null
+    : null;
+
+  const [activeSelection, setActiveSelection] = useState<string | null>(initialCommunity);
+  const [pulseItem, setPulseItem] = useState<string | null>(null);
+
+  const handleSelect = (c: string) => {
+    setActiveSelection(c);
+    setPulseItem(c);
+    setTimeout(() => {
+      setPulseItem((prev) => (prev === c ? null : prev));
+    }, 500);
+  };
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
@@ -183,22 +198,45 @@ function AplicaPage() {
 
             <div className="space-y-2">
               <Label>Comunitate preferată</Label>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                {communities.map((c) => (
-                  <label
-                    key={c}
-                    className="flex cursor-pointer items-center gap-3 rounded-xl border border-dark/10 bg-ivory/50 px-4 py-3 text-sm transition-all has-[:checked]:border-indigo-brand has-[:checked]:bg-indigo-brand/5"
-                  >
-                    <input
-                      type="radio"
-                      name="community"
-                      value={c}
-                      defaultChecked={community ? normalizeStr(community) === normalizeStr(c) : false}
-                      className="size-4 accent-indigo-brand"
-                    />
-                    <span className="truncate font-medium">{c}</span>
-                  </label>
-                ))}
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {communities.map((c) => {
+                  const isChecked = activeSelection === c;
+                  const isPulsing = pulseItem === c;
+                  return (
+                    <label
+                      key={c}
+                      className={`relative flex cursor-pointer items-center gap-4 rounded-2xl border px-5 py-4 text-sm transition-all duration-300 hover:border-indigo-brand/40 hover:bg-white/80 active:scale-[0.97] select-none ${
+                        isChecked
+                          ? "border-indigo-brand bg-indigo-brand/5 shadow-md shadow-indigo-brand/5"
+                          : "border-dark/10 bg-ivory/50"
+                      } ${isPulsing ? "animate-satisfying-click" : ""}`}
+                    >
+                      <input
+                        type="radio"
+                        name="community"
+                        value={c}
+                        checked={isChecked}
+                        onChange={() => handleSelect(c)}
+                        className="sr-only"
+                      />
+                      
+                      {/* Custom satisfying indicator dot */}
+                      <div className={`flex size-5 shrink-0 items-center justify-center rounded-full border-2 bg-white transition-all duration-300 ${
+                        isChecked ? "border-indigo-brand scale-105" : "border-dark/20"
+                      }`}>
+                        <div className={`size-2.5 rounded-full bg-indigo-brand transition-transform duration-500 cubic-bezier(0.34, 1.56, 0.64, 1) ${
+                          isChecked ? "scale-100" : "scale-0"
+                        }`} />
+                      </div>
+
+                      <span className={`truncate font-bold uppercase tracking-wider transition-colors ${
+                        isChecked ? "text-indigo-brand" : "text-dark/70"
+                      }`}>
+                        {c}
+                      </span>
+                    </label>
+                  );
+                })}
               </div>
               {errors.community && <ErrorText>{errors.community}</ErrorText>}
             </div>

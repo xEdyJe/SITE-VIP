@@ -133,7 +133,7 @@ function RootComponent() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const routerState = useRouterState();
   const pathname = routerState.location.pathname;
-  const [transitioning, setTransitioning] = useState(false);
+  const [curtainState, setCurtainState] = useState<"idle" | "closing" | "opening">("idle");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -147,12 +147,24 @@ function RootComponent() {
   }, []);
 
   useEffect(() => {
-    setTransitioning(true);
-    const t = setTimeout(() => {
-      setTransitioning(false);
+    // Start transition wipe (closing the curtain)
+    setCurtainState("closing");
+
+    // After 450ms, open the curtain (sliding it out at the top) and scroll to top
+    const t1 = setTimeout(() => {
+      setCurtainState("opening");
       window.scrollTo(0, 0);
-    }, 50);
-    return () => clearTimeout(t);
+    }, 450);
+
+    // After 900ms, reset curtain position to idle (instantly, below screen)
+    const t2 = setTimeout(() => {
+      setCurtainState("idle");
+    }, 900);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, [pathname]);
 
   useEffect(() => {
@@ -188,9 +200,11 @@ function RootComponent() {
         className="fixed top-0 left-0 z-50 h-1 bg-indigo-brand transition-all duration-75"
         style={{ width: `${scrollProgress}%` }}
       />
-      <div className={`page-transition-wrapper ${!transitioning ? "page-transition-enter" : ""}`}>
-        <Outlet />
-      </div>
+      
+      {/* Curtain Transition Overlay */}
+      <div className={`curtain-overlay curtain-${curtainState}`} />
+
+      <Outlet />
     </QueryClientProvider>
   );
 }
