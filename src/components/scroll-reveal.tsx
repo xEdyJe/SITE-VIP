@@ -21,10 +21,16 @@ export function ScrollReveal({
   const elementRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    // Fallback: force visibility after 600ms if observer fails to trigger (e.g. hydration/scrolling issues)
+    const timeoutId = setTimeout(() => {
+      setIsVisible(true);
+    }, 600);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          clearTimeout(timeoutId);
           observer.unobserve(entry.target);
         }
       },
@@ -39,6 +45,7 @@ export function ScrollReveal({
     }
 
     return () => {
+      clearTimeout(timeoutId);
       observer.disconnect();
     };
   }, []);

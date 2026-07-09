@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -130,6 +131,9 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const [scrollProgress, setScrollProgress] = useState(0);
+  const routerState = useRouterState();
+  const pathname = routerState.location.pathname;
+  const [transitioning, setTransitioning] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -141,6 +145,15 @@ function RootComponent() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    setTransitioning(true);
+    const t = setTimeout(() => {
+      setTransitioning(false);
+      window.scrollTo(0, 0);
+    }, 50);
+    return () => clearTimeout(t);
+  }, [pathname]);
 
   useEffect(() => {
     // Initialize Lenis smooth scrolling
@@ -175,7 +188,9 @@ function RootComponent() {
         className="fixed top-0 left-0 z-50 h-1 bg-indigo-brand transition-all duration-75"
         style={{ width: `${scrollProgress}%` }}
       />
-      <Outlet />
+      <div className={`page-transition-wrapper ${!transitioning ? "page-transition-enter" : ""}`}>
+        <Outlet />
+      </div>
     </QueryClientProvider>
   );
 }
