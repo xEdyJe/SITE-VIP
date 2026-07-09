@@ -110,7 +110,7 @@ function AplicaPage() {
       <main className="mx-auto max-w-5xl px-6 pb-24 pt-32 sm:pt-40">
         <header className="mx-auto max-w-2xl text-center">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-indigo-brand">
-            Cohortă 2026 · Aplicare
+            Seria 2026 · Aplicare
           </p>
           <h1 className="mt-6 text-balance text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
             Fă pasul către{" "}
