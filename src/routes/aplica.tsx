@@ -11,7 +11,7 @@ export const Route = createFileRoute("/aplica")({
       {
         name: "description",
         content:
-          "Depune aplicația pentru noua cohortă VIP Romania. Alătură-te celei mai influente comunități de studenți din România.",
+          "Depune aplicația pentru noua serie VIP Romania. Alătură-te celei mai influente comunități de studenți din România.",
       },
       { property: "og:title", content: "Aplică — VIP Romania" },
       {

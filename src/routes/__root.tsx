@@ -98,7 +98,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: "VIP Romania — Unde excepționalul prinde aripi" },
       {
         name: "twitter:description",
-        content: "Patru comunități, un singur standard de excelență. Aplică pentru cohorta viitoare.",
+        content: "Patru comunități, un singur standard de excelență. Aplică pentru seria viitoare.",
       },
     ],
     links: [
