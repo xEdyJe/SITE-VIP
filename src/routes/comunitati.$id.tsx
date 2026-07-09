@@ -170,7 +170,7 @@ function CommunityPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-ivory text-dark">
+    <div className="min-h-screen bg-ivory text-dark overflow-x-hidden">
       <SiteNav />
 
       {/* 1. HERO SECTION */}
@@ -325,7 +325,7 @@ function CommunityPage() {
       <section className={`relative overflow-hidden ${data.bgClass} py-24 text-ivory md:py-32`}>
         <span
           aria-hidden
-          className="pointer-events-none absolute -top-4 left-0 select-none whitespace-nowrap font-serif text-[22vw] font-bold leading-none tracking-tighter text-white/5 md:-top-8"
+          className="pointer-events-none absolute -top-4 left-0 select-none whitespace-nowrap font-serif text-[15vw] md:text-[22vw] font-bold leading-none tracking-tighter text-white/5 md:-top-8"
         >
           numere
         </span>
@@ -354,7 +354,7 @@ function CommunityPage() {
       <section className="relative overflow-hidden bg-ivory py-24 md:py-32">
         <span
           aria-hidden
-          className="pointer-events-none absolute -bottom-6 right-0 select-none whitespace-nowrap font-serif italic text-[22vw] font-bold leading-none tracking-tighter text-dark/5"
+          className="pointer-events-none absolute -bottom-6 right-0 select-none whitespace-nowrap font-serif italic text-[10vw] md:text-[16vw] font-bold leading-none tracking-tighter text-dark/5"
         >
           testimoniale
         </span>
