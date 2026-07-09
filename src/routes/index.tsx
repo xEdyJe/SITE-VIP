@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { ScrollReveal } from "@/components/scroll-reveal";
 import heroImg from "@/assets/hero.jpg";
 import businessImg from "@/assets/business.jpg";
 import academyImg from "@/assets/academy.jpg";
@@ -238,66 +239,74 @@ function Index() {
       {/* COMMUNITIES BENTO */}
       <section id="communities" className="bg-dark py-24 text-ivory md:py-32">
         <div className="container mx-auto px-6">
-          <div className="mb-12 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-6 md:mb-16">
-            <div className="min-w-0 max-w-xl">
-              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
-                — Comunități
-              </p>
-              <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
-                Patru piloni ai{" "}
-                <span className="font-serif italic font-normal text-indigo-brand">
-                  performanței
-                </span>
-                .
-              </h2>
-              <p className="mt-4 text-base text-ivory/60 md:mt-6 md:text-lg">
-                Fiecare comunitate este un ecosistem autonom de învățare și networking de elită.
-              </p>
+          <ScrollReveal animation="fade-up">
+            <div className="mb-12 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-6 md:mb-16">
+              <div className="min-w-0 max-w-xl">
+                <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
+                  — Comunități
+                </p>
+                <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
+                  Patru piloni ai{" "}
+                  <span className="font-serif italic font-normal text-indigo-brand">
+                    performanței
+                  </span>
+                  .
+                </h2>
+                <p className="mt-4 text-base text-ivory/60 md:mt-6 md:text-lg">
+                  Fiecare comunitate este un ecosistem autonom de învățare și networking de elită.
+                </p>
+              </div>
+              <span className="shrink-0 font-mono text-[10px] tracking-tight text-indigo-brand md:text-sm">
+                ESTB. 1998
+              </span>
             </div>
-            <span className="shrink-0 font-mono text-[10px] tracking-tight text-indigo-brand md:text-sm">
-              ESTB. 1998
-            </span>
-          </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-6">
-            {communities.map((c) => (
-              <article
+            {communities.map((c, idx) => (
+              <ScrollReveal
                 key={c.id}
-                className={`group relative flex min-h-[280px] flex-col justify-end overflow-hidden rounded-3xl border p-6 transition-all sm:p-8 md:min-h-[400px] ${c.span
-                  } ${c.highlight
-                    ? "border-transparent bg-indigo-brand hover:brightness-110"
-                    : "border-ivory/5 bg-dark-surface hover:border-indigo-brand/50"
-                  }`}
+                delay={idx * 150}
+                animation="fade-up"
+                className={c.span}
               >
-                {c.image && (
-                  <div className="absolute inset-0 z-0 opacity-30 transition-transform duration-700 group-hover:scale-105">
-                    <img
-                      src={c.image}
-                      alt=""
-                      className="h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark-surface via-dark-surface/60 to-transparent" />
+                <article
+                  className={`group relative flex min-h-[280px] h-full w-full flex-col justify-end overflow-hidden rounded-3xl border p-6 transition-all sm:p-8 md:min-h-[400px] ${
+                    c.highlight
+                      ? "border-transparent bg-indigo-brand hover:brightness-110"
+                      : "border-ivory/5 bg-dark-surface hover:border-indigo-brand/50"
+                  }`}
+                >
+                  {c.image && (
+                    <div className="absolute inset-0 z-0 opacity-30 transition-transform duration-700 group-hover:scale-105">
+                      <img
+                        src={c.image}
+                        alt=""
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-dark-surface via-dark-surface/60 to-transparent" />
+                    </div>
+                  )}
+                  <div className="absolute right-6 top-6 sm:right-8 sm:top-8">
+                    <span
+                      className={`font-mono text-[10px] tracking-tight ${c.highlight ? "text-ivory/60" : "text-ivory/30"
+                        }`}
+                    >
+                      {c.tag}
+                    </span>
                   </div>
-                )}
-                <div className="absolute right-6 top-6 sm:right-8 sm:top-8">
-                  <span
-                    className={`font-mono text-[10px] tracking-tight ${c.highlight ? "text-ivory/60" : "text-ivory/30"
-                      }`}
-                  >
-                    {c.tag}
-                  </span>
-                </div>
-                <div className="relative z-10">
-                  <h3 className="text-2xl font-bold sm:text-3xl">{c.title}</h3>
-                  <p
-                    className={`mt-2 max-w-sm text-sm ${c.highlight ? "text-ivory/80" : "text-ivory/50"
-                      }`}
-                  >
-                    {c.desc}
-                  </p>
-                </div>
-              </article>
+                  <div className="relative z-10">
+                    <h3 className="text-2xl font-bold sm:text-3xl">{c.title}</h3>
+                    <p
+                      className={`mt-2 max-w-sm text-sm ${c.highlight ? "text-ivory/80" : "text-ivory/50"
+                        }`}
+                    >
+                      {c.desc}
+                    </p>
+                  </div>
+                </article>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -306,30 +315,37 @@ function Index() {
       {/* DEPARTAMENTE */}
       <section id="departamente" className="bg-ivory py-24 md:py-32">
         <div className="container mx-auto px-6">
-          <div className="mb-12 max-w-2xl md:mb-16">
-            <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
-              — Departamente
-            </p>
-            <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">
-              Cum <span className="font-serif italic font-normal text-indigo-brand">funcționăm</span>.
-            </h2>
-            <p className="mt-4 text-base text-dark/60 md:text-lg">
-              Fiecare departament este o școală în sine. Alege unde vrei să crești.
-            </p>
-          </div>
+          <ScrollReveal animation="fade-up">
+            <div className="mb-12 max-w-2xl md:mb-16">
+              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
+                — Departamente
+              </p>
+              <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">
+                Cum <span className="font-serif italic font-normal text-indigo-brand">funcționăm</span>.
+              </h2>
+              <p className="mt-4 text-base text-dark/60 md:text-lg">
+                Fiecare departament este o școală în sine. Alege unde vrei să crești.
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
-            {departments.map((d) => (
-              <div
+            {departments.map((d, idx) => (
+              <ScrollReveal
                 key={d.title}
-                className="group rounded-2xl border border-dark/5 bg-white p-6 transition-all hover:-translate-y-1 hover:border-indigo-brand/30 hover:shadow-xl hover:shadow-indigo-brand/5 md:p-8"
+                delay={(idx % 3) * 120 + Math.floor(idx / 3) * 80}
+                animation="fade-up"
               >
-                <div className="mb-6 grid size-11 place-items-center rounded-xl bg-indigo-brand/10">
-                  <DeptIcon name={d.icon} />
+                <div
+                  className="group h-full rounded-2xl border border-dark/5 bg-white p-6 transition-all hover:-translate-y-1 hover:border-indigo-brand/30 hover:shadow-xl hover:shadow-indigo-brand/5 md:p-8"
+                >
+                  <div className="mb-6 grid size-11 place-items-center rounded-xl bg-indigo-brand/10">
+                    <DeptIcon name={d.icon} />
+                  </div>
+                  <h3 className="text-lg font-bold md:text-xl">{d.title}</h3>
+                  <p className="mt-2 text-sm text-dark/60">{d.desc}</p>
                 </div>
-                <h3 className="text-lg font-bold md:text-xl">{d.title}</h3>
-                <p className="mt-2 text-sm text-dark/60">{d.desc}</p>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -345,15 +361,20 @@ function Index() {
         </span>
         <div className="container relative z-10 mx-auto px-6">
           <div className="mt-24 grid grid-cols-2 gap-8 md:mt-32 md:grid-cols-4 md:gap-6">
-            {stats.map((s) => (
-              <div key={s.label} className="border-t border-ivory/20 pt-4">
+            {stats.map((s, idx) => (
+              <ScrollReveal
+                key={s.label}
+                delay={idx * 100}
+                animation="fade-up"
+                className="border-t border-ivory/20 pt-4"
+              >
                 <p className="font-serif text-4xl font-bold leading-none md:text-6xl lg:text-7xl">
                   {s.value}
                 </p>
                 <p className="mt-3 text-[10px] uppercase tracking-[0.25em] text-ivory/70 md:text-xs">
                   {s.label}
                 </p>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -362,40 +383,47 @@ function Index() {
       {/* PROIECTE */}
       <section id="proiecte" className="bg-ivory py-24 md:py-32">
         <div className="container mx-auto px-6">
-          <div className="mb-12 max-w-2xl md:mb-16">
-            <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
-              — Proiecte
-            </p>
-            <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">
-              Ce construim <span className="font-serif italic font-normal text-indigo-brand">împreună</span>.
-            </h2>
-            <p className="mt-4 text-base text-dark/60 md:text-lg">
-              Inițiative cu impact real, gândite și livrate de studenți pentru studenți.
-            </p>
-          </div>
+          <ScrollReveal animation="fade-up">
+            <div className="mb-12 max-w-2xl md:mb-16">
+              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
+                — Proiecte
+              </p>
+              <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">
+                Ce construim <span className="font-serif italic font-normal text-indigo-brand">împreună</span>.
+              </h2>
+              <p className="mt-4 text-base text-dark/60 md:text-lg">
+                Inițiative cu impact real, gândite și livrate de studenți pentru studenți.
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {projects.map((p) => (
-              <article
+            {projects.map((p, idx) => (
+              <ScrollReveal
                 key={p.title}
-                className="group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-dark/5 transition-all hover:-translate-y-1 hover:shadow-xl"
+                delay={idx * 150}
+                animation="fade-up"
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <span className="absolute left-4 top-4 rounded-full bg-ivory/90 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-indigo-brand backdrop-blur">
-                    {p.tag}
-                  </span>
-                </div>
-                <div className="p-6 md:p-7">
-                  <h3 className="font-serif text-xl font-bold md:text-2xl">{p.title}</h3>
-                  <p className="mt-2 text-sm text-dark/60">{p.desc}</p>
-                </div>
-              </article>
+                <article
+                  className="group h-full overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-dark/5 transition-all hover:-translate-y-1 hover:shadow-xl"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <span className="absolute left-4 top-4 rounded-full bg-ivory/90 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-indigo-brand backdrop-blur">
+                      {p.tag}
+                    </span>
+                  </div>
+                  <div className="p-6 md:p-7">
+                    <h3 className="font-serif text-xl font-bold md:text-2xl">{p.title}</h3>
+                    <p className="mt-2 text-sm text-dark/60">{p.desc}</p>
+                  </div>
+                </article>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -410,46 +438,53 @@ function Index() {
           voci
         </span>
         <div className="container relative z-10 mx-auto px-6">
-          <div className="mb-12 max-w-2xl md:mb-16">
-            <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
-              — Testimoniale
-            </p>
-            <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">
-              Poveștile <span className="font-serif italic font-normal text-indigo-brand">lor</span>.
-            </h2>
-            <p className="mt-4 text-base text-ivory/60 md:text-lg">
-              Oameni reali, transformări reale. Ei au prins aripi cu VIP.
-            </p>
-          </div>
+          <ScrollReveal animation="fade-up">
+            <div className="mb-12 max-w-2xl md:mb-16">
+              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
+                — Testimoniale
+              </p>
+              <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">
+                Poveștile <span className="font-serif italic font-normal text-indigo-brand">lor</span>.
+              </h2>
+              <p className="mt-4 text-base text-ivory/60 md:text-lg">
+                Oameni reali, transformări reale. Ei au prins aripi cu VIP.
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {testimonials.map((t, i) => (
-              <figure
+            {testimonials.map((t, idx) => (
+              <ScrollReveal
                 key={t.name}
-                className="flex flex-col justify-between rounded-3xl border border-ivory/10 bg-dark-surface p-7 md:p-8"
+                delay={idx * 150}
+                animation="fade-up"
               >
-                <div>
-                  <svg className="mb-4 size-6 text-indigo-brand" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M7 7h4v4H8c0 2 1 3 3 3v3c-4 0-6-2-6-6V7zm9 0h4v4h-3c0 2 1 3 3 3v3c-4 0-6-2-6-6V7z" />
-                  </svg>
-                  <blockquote className="font-serif text-lg italic leading-relaxed text-ivory/90 md:text-xl">
-                    „{t.quote}"
-                  </blockquote>
-                </div>
-                <figcaption className="mt-6 flex items-center gap-3 border-t border-ivory/10 pt-5">
-                  {i === 0 ? (
-                    <img src={portraitImg} alt={t.name} className="size-11 rounded-full object-cover" loading="lazy" />
-                  ) : (
-                    <div className="grid size-11 place-items-center rounded-full bg-indigo-brand/20 text-sm font-bold text-indigo-brand">
-                      {t.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
-                    </div>
-                  )}
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-bold">{t.name}</p>
-                    <p className="truncate text-[11px] text-ivory/50">{t.role}</p>
+                <figure
+                  className="flex h-full flex-col justify-between rounded-3xl border border-ivory/10 bg-dark-surface p-7 md:p-8"
+                >
+                  <div>
+                    <svg className="mb-4 size-6 text-indigo-brand" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M7 7h4v4H8c0 2 1 3 3 3v3c-4 0-6-2-6-6V7zm9 0h4v4h-3c0 2 1 3 3 3v3c-4 0-6-2-6-6V7z" />
+                    </svg>
+                    <blockquote className="font-serif text-lg italic leading-relaxed text-ivory/90 md:text-xl">
+                      „{t.quote}"
+                    </blockquote>
                   </div>
-                </figcaption>
-              </figure>
+                  <figcaption className="mt-6 flex items-center gap-3 border-t border-ivory/10 pt-5">
+                    {idx === 0 ? (
+                      <img src={portraitImg} alt={t.name} className="size-11 rounded-full object-cover" loading="lazy" />
+                    ) : (
+                      <div className="grid size-11 place-items-center rounded-full bg-indigo-brand/20 text-sm font-bold text-indigo-brand">
+                        {t.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                      </div>
+                    )}
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-bold">{t.name}</p>
+                      <p className="truncate text-[11px] text-ivory/50">{t.role}</p>
+                    </div>
+                  </figcaption>
+                </figure>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -479,48 +514,58 @@ function Index() {
       {/* FAQ */}
       <section id="intrebari" className="bg-ivory py-24 md:py-32">
         <div className="container mx-auto max-w-3xl px-6">
-          <div className="mb-12 md:mb-16">
-            <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
-              — Întrebări frecvente
-            </p>
-            <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">
-              Tot ce vrei <span className="font-serif italic font-normal text-indigo-brand">să știi</span>.
-            </h2>
-          </div>
+          <ScrollReveal animation="fade-up">
+            <div className="mb-12 md:mb-16">
+              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
+                — Întrebări frecvente
+              </p>
+              <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">
+                Tot ce vrei <span className="font-serif italic font-normal text-indigo-brand">să știi</span>.
+              </h2>
+            </div>
+          </ScrollReveal>
 
           <div className="space-y-3">
-            {faqs.map((f, i) => {
-              const open = openFaq === i;
+            {faqs.map((f, idx) => {
+              const open = openFaq === idx;
               return (
-                <div
+                <ScrollReveal
                   key={f.q}
-                  className={`overflow-hidden rounded-2xl border transition-all ${open ? "border-indigo-brand/30 bg-white" : "border-dark/5 bg-white/50"
-                    }`}
+                  delay={idx * 80}
+                  animation="fade-up"
                 >
-                  <button
-                    onClick={() => setOpenFaq(open ? null : i)}
-                    className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
-                    aria-expanded={open}
-                  >
-                    <span className="text-sm font-bold md:text-base">{f.q}</span>
-                    <span
-                      className={`grid size-7 shrink-0 place-items-center rounded-full border border-dark/10 text-dark/60 transition-transform ${open ? "rotate-45 border-indigo-brand/40 text-indigo-brand" : ""
-                        }`}
-                    >
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="size-3.5">
-                        <path d="M12 5v14M5 12h14" strokeLinecap="round" />
-                      </svg>
-                    </span>
-                  </button>
                   <div
-                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                      }`}
+                    className={`overflow-hidden rounded-2xl border transition-all ${
+                      open ? "border-indigo-brand/30 bg-white" : "border-dark/5 bg-white/50"
+                    }`}
                   >
-                    <div className="overflow-hidden">
-                      <p className="px-6 pb-6 text-sm leading-relaxed text-dark/60">{f.a}</p>
+                    <button
+                      onClick={() => setOpenFaq(open ? null : idx)}
+                      className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
+                      aria-expanded={open}
+                    >
+                      <span className="text-sm font-bold md:text-base">{f.q}</span>
+                      <span
+                        className={`grid size-7 shrink-0 place-items-center rounded-full border border-dark/10 text-dark/60 transition-transform ${
+                          open ? "rotate-45 border-indigo-brand/40 text-indigo-brand" : ""
+                        }`}
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="size-3.5">
+                          <path d="M12 5v14M5 12h14" strokeLinecap="round" />
+                        </svg>
+                      </span>
+                    </button>
+                    <div
+                      className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                        open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <p className="px-6 pb-6 text-sm leading-relaxed text-dark/60">{f.a}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </ScrollReveal>
               );
             })}
           </div>
