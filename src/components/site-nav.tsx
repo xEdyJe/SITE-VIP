@@ -1,16 +1,23 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
+const communitiesDropdown = [
+  { label: "Business Club", href: "/comunitati/business-club" },
+  { label: "Econosofia", href: "/comunitati/econosofia" },
+  { label: "International Affairs", href: "/comunitati/international-affairs" },
+  { label: "Leadership Development", href: "/comunitati/leadership-development" },
+];
+
 const links = [
-  { label: "Comunități", href: "#communities" },
-  { label: "Departamente", href: "#departamente" },
-  { label: "Proiecte", href: "#proiecte" },
-  { label: "Testimoniale", href: "#testimoniale" },
-  { label: "Întrebări", href: "#intrebari" },
+  { label: "Departamente", href: "/#departamente" },
+  { label: "Proiecte", href: "/#proiecte" },
+  { label: "Testimoniale", href: "/#testimoniale" },
+  { label: "Întrebări", href: "/#intrebari" },
 ];
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -34,6 +41,43 @@ export function SiteNav() {
           </Link>
 
           <div className="hidden items-center gap-6 text-xs font-medium uppercase tracking-widest text-dark/60 md:flex">
+            {/* Communities Dropdown Wrapper */}
+            <div 
+              className="relative py-2"
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
+            >
+              <button 
+                className="flex items-center gap-1 cursor-pointer transition-colors hover:text-indigo-brand text-xs font-bold uppercase tracking-widest text-dark/60"
+              >
+                Comunități
+                <svg 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2.5" 
+                  className={`size-3 transition-transform duration-300 ${dropdownOpen ? "rotate-180 text-indigo-brand" : ""}`}
+                >
+                  <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              
+              {dropdownOpen && (
+                <div className="absolute top-full left-1/2 z-50 mt-1 w-56 -translate-x-1/2 rounded-2xl border border-dark/5 bg-white/95 p-2 shadow-lg backdrop-blur-md animate-fade-up duration-200">
+                  {communitiesDropdown.map((c) => (
+                    <Link
+                      key={c.href}
+                      to={c.href}
+                      className="block rounded-xl px-4 py-2.5 text-left text-xs font-bold uppercase tracking-wider text-dark/80 transition-colors hover:bg-indigo-brand/5 hover:text-indigo-brand"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      {c.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {links.map((l) => (
               <a key={l.href} href={l.href} className="transition-colors hover:text-indigo-brand">
                 {l.label}
@@ -72,21 +116,46 @@ export function SiteNav() {
 
       {/* Mobile menu overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-ivory transition-opacity md:hidden ${
-          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        className={`fixed inset-0 z-40 bg-ivory transition-all duration-300 md:hidden ${
+          open ? "pointer-events-auto opacity-100 translate-y-0" : "pointer-events-none opacity-0 -translate-y-4"
         }`}
       >
-        <div className="flex h-full flex-col items-center justify-center gap-8 px-6 text-center">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="text-3xl font-bold tracking-tight text-dark"
-            >
-              {l.label}
-            </a>
-          ))}
+        <div className="flex h-full flex-col items-center justify-center gap-6 px-6 text-center overflow-y-auto pt-24 pb-12">
+          <Link to="/" onClick={() => setOpen(false)} className="text-2xl font-bold tracking-tight text-dark">
+            Acasă
+          </Link>
+
+          {/* Mobile Comunitati list directly visible */}
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-dark/40">— Comunități —</span>
+            <div className="flex flex-col items-center gap-2.5">
+              {communitiesDropdown.map((c) => (
+                <Link
+                  key={c.href}
+                  to={c.href}
+                  onClick={() => setOpen(false)}
+                  className="text-xl font-bold text-dark hover:text-indigo-brand transition-colors"
+                >
+                  {c.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col items-center gap-3">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-dark/40">— Navigare —</span>
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="text-xl font-bold tracking-tight text-dark hover:text-indigo-brand transition-colors"
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+
           <Link
             to="/aplica"
             onClick={() => setOpen(false)}

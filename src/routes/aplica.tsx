@@ -4,7 +4,12 @@ import { z } from "zod";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 
+const aplicaSearchSchema = z.object({
+  community: z.string().optional(),
+});
+
 export const Route = createFileRoute("/aplica")({
+  validateSearch: aplicaSearchSchema,
   head: () => ({
     meta: [
       { title: "Aplică — VIP Romania" },
@@ -49,9 +54,12 @@ const applicationSchema = z.object({
 type FieldErrors = Partial<Record<keyof z.infer<typeof applicationSchema>, string>>;
 
 function AplicaPage() {
+  const { community } = Route.useSearch();
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
+
+  const normalizeStr = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -185,6 +193,7 @@ function AplicaPage() {
                       type="radio"
                       name="community"
                       value={c}
+                      defaultChecked={community ? normalizeStr(community) === normalizeStr(c) : false}
                       className="size-4 accent-indigo-brand"
                     />
                     <span className="truncate font-medium">{c}</span>
