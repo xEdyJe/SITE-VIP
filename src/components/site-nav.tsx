@@ -28,6 +28,15 @@ export function SiteNav() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    const closeDropdown = () => setDropdownOpen(false);
+    document.addEventListener("click", closeDropdown);
+    return () => {
+      document.removeEventListener("click", closeDropdown);
+    };
+  }, [dropdownOpen]);
+
   return (
     <>
       <nav className="fixed top-4 left-1/2 z-50 w-full max-w-3xl -translate-x-1/2 px-4 sm:top-6">
@@ -42,12 +51,12 @@ export function SiteNav() {
 
           <div className="hidden items-center gap-6 text-xs font-medium uppercase tracking-widest text-dark/60 md:flex">
             {/* Communities Dropdown Wrapper */}
-            <div 
-              className="relative py-2"
-              onMouseEnter={() => setDropdownOpen(true)}
-              onMouseLeave={() => setDropdownOpen(false)}
-            >
+            <div className="relative py-2">
               <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDropdownOpen(!dropdownOpen);
+                }}
                 className="flex items-center gap-1 cursor-pointer transition-colors hover:text-indigo-brand text-xs font-bold uppercase tracking-widest text-dark/60"
               >
                 Comunități
