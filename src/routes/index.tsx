@@ -322,7 +322,7 @@ function Index() {
       </section>
 
       {/* COMMUNITIES BENTO */}
-      <section id="communities" className="bg-dark py-24 text-ivory md:py-32">
+      <section id="communities" className="bg-ivory py-24 text-dark md:py-32">
         <div className="container mx-auto px-6">
           <ScrollReveal animation="clip-reveal">
             <div className="mb-12 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-6 md:mb-16">
@@ -337,7 +337,7 @@ function Index() {
                   </span>
                   .
                 </h2>
-                <p className="mt-4 text-base text-ivory/60 md:mt-6 md:text-lg">
+                <p className="mt-4 text-base text-dark/60 md:mt-6 md:text-lg">
                   Fiecare comunitate este un ecosistem autonom de învățare și networking de elită.
                 </p>
               </div>
@@ -520,10 +520,10 @@ function Index() {
       </section>
 
       {/* TESTIMONIALE */}
-      <section id="testimoniale" className="relative overflow-hidden bg-dark py-24 text-ivory md:py-32">
+      <section id="testimoniale" className="relative overflow-hidden bg-ivory py-24 text-dark md:py-32">
         <span
           aria-hidden
-          className="pointer-events-none absolute -bottom-6 right-0 select-none whitespace-nowrap font-serif italic text-[10vw] md:text-[16vw] font-bold leading-none tracking-tighter text-indigo-brand/20"
+          className="pointer-events-none absolute -bottom-6 right-0 select-none whitespace-nowrap font-serif italic text-[10vw] md:text-[16vw] font-bold leading-none tracking-tighter text-dark/5"
         >
           voci
         </span>
@@ -536,8 +536,8 @@ function Index() {
               <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">
                 Poveștile <span className="font-serif italic font-normal text-indigo-brand">lor</span>.
               </h2>
-              <p className="mt-4 text-base text-ivory/60 md:mt-6 md:text-lg">
-                Oameni reali, transformări reale. Ei au prins aripi cu VIP.
+              <p className="mt-4 text-base text-dark/60 md:mt-6 md:text-lg">
+                Oameni reali, transformări reale. Ei au prin aripi cu VIP.
               </p>
             </div>
           </ScrollReveal>
