@@ -239,7 +239,7 @@ function Index() {
       {/* COMMUNITIES BENTO */}
       <section id="communities" className="bg-dark py-24 text-ivory md:py-32">
         <div className="container mx-auto px-6">
-          <ScrollReveal animation="fade-up">
+          <ScrollReveal animation="clip-reveal">
             <div className="mb-12 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-6 md:mb-16">
               <div className="min-w-0 max-w-xl">
                 <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
@@ -271,18 +271,18 @@ function Index() {
                 className={c.span}
               >
                 <article
-                  className={`group relative flex min-h-[280px] h-full w-full flex-col justify-end overflow-hidden rounded-3xl border p-6 transition-all sm:p-8 md:min-h-[400px] ${
+                  className={`group relative flex min-h-[280px] h-full w-full flex-col justify-end overflow-hidden rounded-3xl border p-6 smooth-hover-card sm:p-8 md:min-h-[400px] ${
                     c.highlight
                       ? "border-transparent bg-indigo-brand hover:brightness-110"
                       : "border-ivory/5 bg-dark-surface hover:border-indigo-brand/50"
                   }`}
                 >
                   {c.image && (
-                    <div className="absolute inset-0 z-0 opacity-30 transition-transform duration-700 group-hover:scale-105">
+                    <div className="absolute inset-0 z-0 opacity-30">
                       <img
                         src={c.image}
                         alt=""
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-cover smooth-hover-image"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-dark-surface via-dark-surface/60 to-transparent" />
@@ -315,7 +315,7 @@ function Index() {
       {/* DEPARTAMENTE */}
       <section id="departamente" className="bg-ivory py-24 md:py-32">
         <div className="container mx-auto px-6">
-          <ScrollReveal animation="fade-up">
+          <ScrollReveal animation="clip-reveal">
             <div className="mb-12 max-w-2xl md:mb-16">
               <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
                 — Departamente
@@ -337,7 +337,7 @@ function Index() {
                 animation="fade-up"
               >
                 <div
-                  className="group h-full rounded-2xl border border-dark/5 bg-white p-6 transition-all hover:-translate-y-1 hover:border-indigo-brand/30 hover:shadow-xl hover:shadow-indigo-brand/5 md:p-8"
+                  className="group h-full rounded-2xl border border-dark/5 bg-white p-6 smooth-hover-card hover:border-indigo-brand/30 hover:shadow-xl hover:shadow-indigo-brand/5 md:p-8"
                 >
                   <div className="mb-6 grid size-11 place-items-center rounded-xl bg-indigo-brand/10">
                     <DeptIcon name={d.icon} />
@@ -383,7 +383,7 @@ function Index() {
       {/* PROIECTE */}
       <section id="proiecte" className="bg-ivory py-24 md:py-32">
         <div className="container mx-auto px-6">
-          <ScrollReveal animation="fade-up">
+          <ScrollReveal animation="clip-reveal">
             <div className="mb-12 max-w-2xl md:mb-16">
               <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
                 — Proiecte
@@ -405,13 +405,13 @@ function Index() {
                 animation="fade-up"
               >
                 <article
-                  className="group h-full overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-dark/5 transition-all hover:-translate-y-1 hover:shadow-xl"
+                  className="group h-full overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-dark/5 smooth-hover-card hover:shadow-xl"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img
                       src={p.image}
                       alt={p.title}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="h-full w-full object-cover smooth-hover-image"
                       loading="lazy"
                     />
                     <span className="absolute left-4 top-4 rounded-full bg-ivory/90 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-indigo-brand backdrop-blur">
@@ -438,7 +438,7 @@ function Index() {
           voci
         </span>
         <div className="container relative z-10 mx-auto px-6">
-          <ScrollReveal animation="fade-up">
+          <ScrollReveal animation="clip-reveal">
             <div className="mb-12 max-w-2xl md:mb-16">
               <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
                 — Testimoniale
@@ -446,7 +446,7 @@ function Index() {
               <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl">
                 Poveștile <span className="font-serif italic font-normal text-indigo-brand">lor</span>.
               </h2>
-              <p className="mt-4 text-base text-ivory/60 md:text-lg">
+              <p className="mt-4 text-base text-ivory/60 md:mt-6 md:text-lg">
                 Oameni reali, transformări reale. Ei au prins aripi cu VIP.
               </p>
             </div>
@@ -460,7 +460,7 @@ function Index() {
                 animation="fade-up"
               >
                 <figure
-                  className="flex h-full flex-col justify-between rounded-3xl border border-ivory/10 bg-dark-surface p-7 md:p-8"
+                  className="flex h-full flex-col justify-between rounded-3xl border border-ivory/10 bg-dark-surface p-7 smooth-hover-card md:p-8"
                 >
                   <div>
                     <svg className="mb-4 size-6 text-indigo-brand" viewBox="0 0 24 24" fill="currentColor">
@@ -514,7 +514,7 @@ function Index() {
       {/* FAQ */}
       <section id="intrebari" className="bg-ivory py-24 md:py-32">
         <div className="container mx-auto max-w-3xl px-6">
-          <ScrollReveal animation="fade-up">
+          <ScrollReveal animation="clip-reveal">
             <div className="mb-12 md:mb-16">
               <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.25em] text-indigo-brand">
                 — Întrebări frecvente

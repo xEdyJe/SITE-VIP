@@ -159,7 +159,7 @@
   }
 
   .reveal-fade-up {
-    transform: translateY(40px);
+    transform: translateY(70px);
   }
 
   .reveal-fade-in {
@@ -172,6 +172,7 @@
 
   .reveal-clip-reveal {
     clip-path: inset(100% 0 0 0);
+    transform: translateY(50px);
   }
 
   /* Reveal visible state */
@@ -189,6 +190,22 @@
 
   .reveal-visible.reveal-clip-reveal {
     clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+
+  /* Custom Lando Norris-style Hover Zoom and Transitions */
+  .smooth-hover-image {
+    transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), filter 1.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .group:hover .smooth-hover-image {
+    transform: scale(1.08) !important;
+  }
+
+  .smooth-hover-card {
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 1.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 1.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+  .smooth-hover-card:hover {
+    transform: translateY(-8px) !important;
   }
 
   /* Lenis smooth scrolling rules */

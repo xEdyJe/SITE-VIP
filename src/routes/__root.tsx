@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Lenis from "lenis";
 
 import appCss from "../styles.css?url";
@@ -129,6 +129,18 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        setScrollProgress((window.scrollY / totalScroll) * 100);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     // Initialize Lenis smooth scrolling
@@ -159,6 +171,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <div 
+        className="fixed top-0 left-0 z-50 h-1 bg-indigo-brand transition-all duration-75"
+        style={{ width: `${scrollProgress}%` }}
+      />
       <Outlet />
     </QueryClientProvider>
   );

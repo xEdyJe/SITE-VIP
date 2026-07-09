@@ -12,7 +12,7 @@ interface ScrollRevealProps {
 export function ScrollReveal({
   children,
   delay = 0,
-  duration = 800,
+  duration = 1200,
   animation = "fade-up",
   className = "",
   as: Component = "div",
