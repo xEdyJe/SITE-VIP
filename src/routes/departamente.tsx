@@ -15,6 +15,7 @@ import {
 // Standard Assets
 import officeGroup from "@/assets/office-group.png";
 import portraitImg from "@/assets/portrait.jpg";
+import departamentGrupImg from "@/assets/Departament-poza-grup-1.jpg";
 
 export const Route = createFileRoute("/departamente")({
   head: () => ({
@@ -279,25 +280,27 @@ function DepartamentePage() {
       </section>
 
       {/* THEORY AND PRACTICE SECTION */}
-      <section className="bg-white py-20 md:py-28 border-y border-dark/5">
+      <section className="bg-white py-20 md:py-28 border-y border-dark/5 overflow-hidden">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-12 lg:gap-8">
-            {/* Left stacked text */}
-            <div className="lg:col-span-4 flex flex-col justify-center items-center lg:items-end text-center lg:text-right">
+            {/* Left stacked text (Asymmetric overlap style) */}
+            <div className="lg:col-span-4 flex flex-col justify-center items-center lg:items-end text-center lg:text-right relative z-20">
               <ScrollReveal animation="fade-up">
-                <h2 className="text-4xl sm:text-5xl font-black text-indigo-brand leading-[1.08] tracking-tight">
-                  Îmbinăm <br />
-                  teoria și <br />
-                  <span className="font-serif italic font-normal text-indigo-brand">practica</span>
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-indigo-brand leading-[1.05] tracking-tighter whitespace-nowrap">
+                  Imbinam <br />
+                  teoria si <br />
+                  <span className="inline-block translate-x-4 sm:translate-x-12 lg:translate-x-20 z-30 font-black">
+                    practica
+                  </span>
                 </h2>
               </ScrollReveal>
             </div>
 
             {/* Center Image */}
-            <div className="lg:col-span-4 flex justify-center">
+            <div className="lg:col-span-4 flex justify-center relative z-10">
               <ScrollReveal animation="scale-up" className="w-full max-w-xs aspect-[3/4] overflow-hidden rounded-[2rem] shadow-xl border border-dark/5">
                 <img
-                  src={officeGroup}
+                  src={departamentGrupImg}
                   alt="Membri VIP cooperând"
                   className="w-full h-full object-cover filter grayscale contrast-110 hover:grayscale-0 transition-all duration-700 ease-out"
                 />
@@ -305,7 +308,7 @@ function DepartamentePage() {
             </div>
 
             {/* Right text description */}
-            <div className="lg:col-span-4 flex flex-col justify-center text-center lg:text-left">
+            <div className="lg:col-span-4 flex flex-col justify-center text-center lg:text-left relative z-20">
               <ScrollReveal animation="fade-up">
                 <h3 className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-indigo-brand mb-4">
                   Ce se întâmplă în departamente?
