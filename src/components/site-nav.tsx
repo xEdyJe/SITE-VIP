@@ -9,10 +9,10 @@ const communitiesDropdown = [
 ];
 
 const links = [
-  { label: "Departamente", href: "/#departamente" },
+  { label: "Despre Noi", href: "/#despre" },
+  { label: "Departamente", href: "/departamente" },
   { label: "Proiecte", href: "/#proiecte" },
-  { label: "Testimoniale", href: "/#testimoniale" },
-  { label: "Întrebări", href: "/#intrebari" },
+  { label: "Parteneri", href: "/#parteneri" },
 ];
 
 export function SiteNav() {

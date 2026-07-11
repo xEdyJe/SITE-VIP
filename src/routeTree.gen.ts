@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as DepartamenteRouteImport } from './routes/departamente'
 import { Route as AplicaRouteImport } from './routes/aplica'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ComunitatiIdRouteImport } from './routes/comunitati.$id'
@@ -17,6 +18,11 @@ import { Route as ComunitatiIdRouteImport } from './routes/comunitati.$id'
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DepartamenteRoute = DepartamenteRouteImport.update({
+  id: '/departamente',
+  path: '/departamente',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AplicaRoute = AplicaRouteImport.update({
@@ -38,12 +44,14 @@ const ComunitatiIdRoute = ComunitatiIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aplica': typeof AplicaRoute
+  '/departamente': typeof DepartamenteRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/comunitati/$id': typeof ComunitatiIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/aplica': typeof AplicaRoute
+  '/departamente': typeof DepartamenteRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/comunitati/$id': typeof ComunitatiIdRoute
 }
@@ -51,20 +59,29 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/aplica': typeof AplicaRoute
+  '/departamente': typeof DepartamenteRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/comunitati/$id': typeof ComunitatiIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/aplica' | '/sitemap.xml' | '/comunitati/$id'
+  fullPaths:
+    '/' | '/aplica' | '/departamente' | '/sitemap.xml' | '/comunitati/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/aplica' | '/sitemap.xml' | '/comunitati/$id'
-  id: '__root__' | '/' | '/aplica' | '/sitemap.xml' | '/comunitati/$id'
+  to: '/' | '/aplica' | '/departamente' | '/sitemap.xml' | '/comunitati/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/aplica'
+    | '/departamente'
+    | '/sitemap.xml'
+    | '/comunitati/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AplicaRoute: typeof AplicaRoute
+  DepartamenteRoute: typeof DepartamenteRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ComunitatiIdRoute: typeof ComunitatiIdRoute
 }
@@ -76,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/departamente': {
+      id: '/departamente'
+      path: '/departamente'
+      fullPath: '/departamente'
+      preLoaderRoute: typeof DepartamenteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/aplica': {
@@ -105,6 +129,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AplicaRoute: AplicaRoute,
+  DepartamenteRoute: DepartamenteRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ComunitatiIdRoute: ComunitatiIdRoute,
 }
