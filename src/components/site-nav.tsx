@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import logoVip from "@/assets/logo vip.png";
 
 const communitiesDropdown = [
   { label: "Business Club", href: "/comunitati/business-club" },
@@ -43,10 +44,10 @@ export function SiteNav() {
         <div className="flex items-center justify-between gap-3 rounded-full border border-dark/5 bg-ivory/80 px-4 py-2 shadow-sm ring-1 ring-black/5 backdrop-blur-md">
           <Link
             to="/"
-            className="pl-1 text-lg font-bold uppercase tracking-tighter text-dark"
+            className="pl-1 flex items-center"
             aria-label="VIP Romania — acasă"
           >
-            vip.
+            <img src={logoVip} alt="VIP Romania" className="h-5 w-auto object-contain" />
           </Link>
 
           <div className="hidden items-center gap-6 text-xs font-medium uppercase tracking-widest text-dark/60 md:flex">

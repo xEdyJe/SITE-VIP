@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import logoVip from "@/assets/logo vip.png";
 
 // --- CUSTOM ILLUSTRATIONS FOR DEPARTMENTS ---
 
@@ -215,7 +216,7 @@ export function BusinessDevelopmentIcon({ className = "size-8" }: { className?: 
 // --- GENERAL MINI-ICONS FOR NGO & COMMUNITIES ---
 
 function VipLogo() {
-  return <span className="font-serif font-bold italic text-indigo-brand text-base md:text-lg">vip.</span>;
+  return <img src={logoVip} alt="VIP Romania" className="h-5 w-auto object-contain" />;
 }
 
 function CommunityIcon({ name, className = "size-4" }: { name: string; className?: string }) {
