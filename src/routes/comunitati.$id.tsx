@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { ScrollReveal } from "@/components/scroll-reveal";
@@ -12,6 +13,14 @@ import portraitImg from "@/assets/portrait.jpg";
 import econosofiaImg from "@/assets/econosofia.jpg";
 import internationalAffairsImg from "@/assets/international-affairs.jpg";
 import leadershipImg from "@/assets/leadership.jpg";
+
+// Testimonial Portraits
+import alinImg from "@/assets/alin-enache.jpg";
+import andreeaImg from "@/assets/andreea-boangher.jpg";
+import annaImg from "@/assets/anna-filip.jpg";
+import alexandraImg from "@/assets/alexandra-scutaru.jpg";
+import patriciaImg from "@/assets/hirstioaga-patricia.jpg";
+import dariaGImg from "@/assets/daria-glonteanu.jpg";
 
 // Communities Data Map
 const COMMUNITIES_DATA = {
@@ -43,8 +52,12 @@ const COMMUNITIES_DATA = {
       { value: "26", text: "Ani de cand Business Club a fost infiintat si a inceput sa ajute tinerii pasionati de antreprenoriat." }
     ],
     testimonials: [
-      { name: "Alin Enache", role: "Project Manager ReelSelf", year: "2023", quote: "Business Club a fost si este cea mai transformativa experienta din viata mea. Mi-a pus in fata oameni absolut minunati si like-minded, m-a invatat sa comunic eficient si sa am curaj - iar asta o spune cineva care a fost inchis in sine marea majoritate a vietii. Aici am invatat lucruri pe care nici o carte, curs sau seminar nu mi le puteau arata vreodata." },
-      { name: "Irina Zota", role: "Founder Izzie Publishing", year: "2022", quote: "Business Club a fost o experienta incredibila pentru mine. Am descoperit o comunitate dinamica, plina de oameni pasionați și motivați, care m-au inspirat să-mi duc ideile la un alt nivel. Sprijinul și oportunitățile oferite aici sunt cu adevărat valoroase, iar mediul te provoacă constant să crești." }
+      { name: "Alin Enache", role: "Project Manager ReelSelf", year: "2023", quote: "Business Club a fost si este cea mai transformativa experienta din viata mea. Mi-a pus in fata oameni absolut minunati si like-minded, m-a invatat sa comunic eficient si sa am curaj - iar asta o spune cineva care a fost inchis in sine marea majoritate a vietii. Aici am invatat lucruri pe care nici o carte, curs sau seminar nu mi le puteau arata vreodata.", image: alinImg },
+      { name: "Irina Zota", role: "Founder Izzie Publishing", year: "2022", quote: "Business Club a fost o experienta incredibila pentru mine. Am descoperit o comunitate dinamica, plina de oameni pasionați și motivați, care m-au inspirat să-mi duc ideile la un alt nivel. Sprijinul și oportunitățile oferite aici sunt cu adevărat valoroase, iar mediul te provoacă constant să crești.", imageFile: "irina-zota.jpg" },
+      { name: "Mădălin Popa", role: "Business Developer", year: "2023", quote: "Business Club a fost contextul în care am înțeles cum să negociez și să îmi depășesc limitele. Comunitatea de oameni de aici îți oferă oportunități extraordinare pe care nu le găsești în altă parte. M-a ajutat să mă dezvolt atât profesional, cât și personal, modelându-mi parcursul academic.", imageFile: "madalin.jpg" },
+      { name: "Andreea Boangher", role: "Manager Business Club 2022-2023", year: "2023", quote: "În Business Club am descoperit o pasiune incredibilă pentru strategie și antreprenoriat. Este locul unde ideile prin contur și unde înveți să colaborezi cu profesioniști din industrie.", image: andreeaImg },
+      { name: "Robert Nica", role: "Alumni Business Club", year: "2022", quote: "Networking-ul valoros și proiectele reale desfășurate în cadrul comunității m-au propulsat în carieră. Aici am învățat arta pitching-ului și cum să construiesc parteneriate de încredere.", imageFile: "robert-nica.jpg" },
+      { name: "Anna Filip", role: "Alumni Business Club", year: "2024", quote: "O comunitate extrem de dinamică și unită. Fiecare workshop și sesiune de mentorship m-au provocat să gândesc ca un antreprenor și să găsesc soluții inovatoare pentru orice provocare.", image: annaImg }
     ],
     ctaText: "Investește în viitorul liderilor de business din România."
   },
@@ -76,8 +89,9 @@ const COMMUNITIES_DATA = {
       { value: "22", text: "Ani de excelență academică și promovare a economiei sănătoase." }
     ],
     testimonials: [
-      { name: "Bogdan Marin", role: "Economist, BNR", year: "2021", quote: "Econosofia mi-a oferit structura mentală necesară pentru a înțelege cum funcționează de fapt mecanismele financiare. Discuțiile noastre din comunitate erau de o calitate rară în spațiul academic românesc." },
-      { name: "Ioana Vlad", role: "Equity Analyst, London", year: "2020", quote: "Comunitatea în care am învățat să pun întrebări economice incomode. Aici am dobândit rigurozitatea analitică care m-a ajutat să îmi lansez cariera în banking la Londra." }
+      { name: "Bogdan Marin", role: "Economist, BNR", year: "2021", quote: "Econosofia mi-a oferit structura mentală necesară pentru a înțelege cum funcționează de fapt mecanismele financiare. Discuțiile noastre din comunitate erau de o calitate rară în spațiul academic românesc.", imageFile: "bogdan-marin.jpg" },
+      { name: "Ioana Vlad", role: "Equity Analyst, London", year: "2020", quote: "Comunitatea în care am învățat să pun întrebări economice incomode. Aici am dobândit rigurozitatea analitică care m-a ajutat să îmi lansez cariera în banking la Londra.", imageFile: "ioana-vlad.jpg" },
+      { name: "Vlad Rădulescu", role: "Financial Analyst", year: "2022", quote: "Analizele macro și dezbaterile pe teme de politici publice din Econosofia mi-au lărgit orizonturile economice și m-au învățat să privesc dincolo de cifre. Recomand cu încredere oricărui student pasionat de finanțe.", imageFile: "vlad-radulescu.jpg" }
     ],
     ctaText: "Investește în viitorul analiștilor economici din România."
   },
@@ -109,8 +123,9 @@ const COMMUNITIES_DATA = {
       { value: "24", text: "Ani de formare a spiritului critic global și a dialogului constructiv." }
     ],
     testimonials: [
-      { name: "Radu Sandu", role: "Consilier Politic, Bruxelles", year: "2022", quote: "International Affairs m-a ajutat să trec de la simplul interes pentru știri globale la analiza structurală a deciziilor luate de marile puteri. A fost primul meu pas către Uniunea Europeană." },
-      { name: "Elena Stoica", role: "Analist de Securitate", year: "2021", quote: "Dezbaterile tensionate și simulările de crize geopolitice m-au învățat să îmi păstrez calmul și să găsesc soluții sub presiune. O comunitate de mentori excepționali." }
+      { name: "Radu Sandu", role: "Consilier Politic, Bruxelles", year: "2022", quote: "International Affairs m-a ajutat să trec de la simplul interes pentru știri globale la analiza structurală a deciziilor luate de marile puteri. A fost primul meu pas către Uniunea Europeană.", imageFile: "radu-sandu.jpg" },
+      { name: "Elena Stoica", role: "Analist de Securitate", year: "2021", quote: "Dezbaterile tensionate și simulările de crize geopolitice m-au învățat să îmi păstrez calmul și să găsesc soluții sub presiune. O comunitate de mentori excepționali.", imageFile: "elena-stoica.jpg" },
+      { name: "Alexandra Scutaru", role: "Alumni International Affairs", year: "2023", quote: "Simulările de negocieri diplomatice și summituri globale din cadrul comunității m-au învățat comunicarea diplomatică și rezolvarea de conflicte. Este mediul ideal pentru viitori lideri globali.", image: alexandraImg }
     ],
     ctaText: "Investește în viitorul liderilor geopolitici din România."
   },
@@ -142,8 +157,10 @@ const COMMUNITIES_DATA = {
       { value: "20", text: "Ani de inspirație și transformare personală pentru membrii noștri." }
     ],
     testimonials: [
-      { name: "Mihai Stoian", role: "HR Manager, Corporate", year: "2022", quote: "BOOTCAMP-ul și sesiunile din LD m-au forțat să ies din zona de confort. Am învățat cum să fiu un lider pe care oamenii vor să îl urmeze, nu doar un manager." },
-      { name: "Corina Matei", role: "Co-Founder & Coach", year: "2020", quote: "Leadership Development a fost exact catalizatorul de care aveam nevoie. Am descoperit ce înseamnă responsabilitatea, vulnerabilitatea în echipă și cum să construiesc comunități." }
+      { name: "Mihai Stoian", role: "HR Manager, Corporate", year: "2022", quote: "BOOTCAMP-ul și sesiunile din LD m-au forțat să ies din zona de confort. Am învățat cum să fiu un lider pe care oamenii vor să îl urmeze, nu doar un manager.", imageFile: "mihai-stoian.jpg" },
+      { name: "Corina Matei", role: "Co-Founder & Coach", year: "2020", quote: "Leadership Development a fost exact catalizatorul de care aveam nevoie. Am descoperit ce înseamnă responsabilitatea, vulnerabilitatea în echipă și cum să construiesc comunități.", imageFile: "corina-matei.jpg" },
+      { name: "Hîrștioaga Patricia", role: "Alumni Leadership Development", year: "2023", quote: "O călătorie extraordinară de autocunoaștere și autodepășire. Am dobândit abilități esențiale de public speaking și managementul conflictelor pe care le aplic zilnic în viața profesională.", image: patriciaImg },
+      { name: "Daria Glonțeanu", role: "Alumni Leadership Development", year: "2024", quote: "Leadership Development te învață cum să ghidezi o echipă spre succes, cultivând empatia și responsabilitatea. M-a ajutat să devin un lider mai asertiv și să am o viziune clară asupra proiectelor.", image: dariaGImg }
     ],
     ctaText: "Investește în viitorul liderilor autentici din România."
   }
@@ -152,6 +169,31 @@ const COMMUNITIES_DATA = {
 export const Route = createFileRoute("/comunitati/$id")({
   component: CommunityPage,
 });
+
+function TestimonialImage({ name, image, imageFile }: { name: string; image?: string; imageFile?: string }) {
+  const [hasError, setHasError] = useState(false);
+  const initials = name.split(" ").map((n) => n[0]).join("").slice(0, 2);
+
+  if (image && !hasError) {
+    return (
+      <img
+        src={image}
+        alt={name}
+        className="absolute inset-0 w-full h-full object-cover"
+        onError={() => setHasError(true)}
+      />
+    );
+  }
+
+  return (
+    <div className="absolute inset-0 bg-white/20 flex flex-col items-center justify-center text-center p-4">
+      <span className="text-2xl font-extrabold tracking-wider text-white opacity-85 select-none">{initials}</span>
+      <span className="text-[7px] font-mono opacity-65 mt-2 break-all select-all font-semibold select-none">
+        {imageFile || "Fără poză"}
+      </span>
+    </div>
+  );
+}
 
 function CommunityPage() {
   const { id } = Route.useParams();
@@ -359,7 +401,7 @@ function CommunityPage() {
           testimoniale
         </span>
         
-        <div className="container relative z-10 mx-auto px-6">
+        <div className="container relative z-10 mx-auto px-6 max-w-6xl">
           <ScrollReveal animation="clip-reveal" className="mb-16 text-center">
             <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-dark/50">— Experiențe reale</p>
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-dark sm:text-4xl">
@@ -367,30 +409,46 @@ function CommunityPage() {
             </h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          {/* Horizontal Scroll wrapper */}
+          <div className="relative -mx-6 px-6 overflow-x-auto scrollbar-none snap-x snap-mandatory flex gap-6 pb-8 pt-4">
             {data.testimonials.map((t, idx) => (
               <ScrollReveal
                 key={t.name}
-                delay={idx * 150}
+                delay={idx * 100}
                 animation="fade-up"
+                className="snap-center"
               >
-                <div className={`flex flex-col md:flex-row gap-6 rounded-3xl ${data.bgClass} p-8 text-white shadow-xl ${data.shadowClass} smooth-hover-card h-full`}>
-                  {/* Avatar/Portrait Mock */}
-                  <div className="size-16 shrink-0 rounded-2xl bg-white/25 flex items-center justify-center font-bold text-xl text-white">
-                    {t.name.split(" ").map(n => n[0]).join("")}
+                <div
+                  className={`w-[320px] sm:w-[460px] md:w-[480px] shrink-0 aspect-[16/11] sm:aspect-[1.65] rounded-[2rem] overflow-hidden ${data.bgClass} text-white shadow-xl ${data.shadowClass} flex border border-white/10 hover:scale-[1.01] transition-transform duration-300`}
+                >
+                  {/* Left side: Photo */}
+                  <div className="w-[35%] shrink-0 h-full relative bg-dark/25 border-r border-white/10">
+                    <TestimonialImage name={t.name} image={t.image} imageFile={t.imageFile} />
                   </div>
-                  <div className="flex flex-col justify-between">
+
+                  {/* Right side: Details */}
+                  <div className="w-[65%] p-5 md:p-6 flex flex-col justify-between text-left">
                     <div>
-                      <span className="text-[9px] font-mono uppercase tracking-widest text-white/60">
-                        Absolvent · Promotie {t.year}
-                      </span>
-                      <p className="mt-3 text-sm leading-relaxed text-white/90">
+                      <h4 className="text-sm sm:text-base font-extrabold text-white tracking-tight leading-tight">
+                        {t.name}
+                      </h4>
+                      <p className="text-[10px] text-white/70 font-semibold tracking-wide mt-1 truncate">
+                        {t.role}
+                      </p>
+                      <p className="mt-3 text-[11px] sm:text-xs text-white/90 leading-relaxed italic line-clamp-4 sm:line-clamp-5 font-serif">
                         „{t.quote}”
                       </p>
                     </div>
-                    <div className="mt-6 border-t border-white/10 pt-4">
-                      <p className="text-sm font-bold">{t.name}</p>
-                      <p className="text-[10px] text-white/60">{t.role}</p>
+
+                    <div className="flex justify-between border-t border-white/15 pt-3 text-[9px] font-mono tracking-wider text-white/50 uppercase">
+                      <div>
+                        <span className="block text-[7px] text-white/40 leading-none">Comunitate</span>
+                        <span className="font-bold text-white/80">{data.title}</span>
+                      </div>
+                      <div className="text-right">
+                        <span className="block text-[7px] text-white/40 leading-none">An</span>
+                        <span className="font-bold text-white/80">{t.year}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -398,7 +456,7 @@ function CommunityPage() {
             ))}
           </div>
 
-          <ScrollReveal animation="fade-up" className="mt-16 text-center">
+          <ScrollReveal animation="fade-up" className="mt-12 text-center">
             <Link
               to="/aplica"
               search={{ community: data.title }}

@@ -17,6 +17,24 @@ import officeGroup from "@/assets/office-group.png";
 import portraitImg from "@/assets/portrait.jpg";
 import departamentGrupImg from "@/assets/Departament-poza-grup-1.jpg";
 
+// Testimonial Portraits
+import emaImg from "@/assets/ema-grigorcea.jpg";
+import cristianImg from "@/assets/cristian-cojocarita.jpg";
+import alinImg from "@/assets/alin-enache.jpg";
+import mariaImg from "@/assets/maria-pirvu.jpg";
+import lorenaImg from "@/assets/lorena-radu.jpg";
+import dariaRImg from "@/assets/daria-roman.jpg";
+import alexandraImg from "@/assets/alexandra-scutaru.jpg";
+import cosminaImg from "@/assets/cosmina-dobre.jpg";
+import teodoraImg from "@/assets/teodora-petcu.jpg";
+import anaImg from "@/assets/ana-popescu.jpg";
+import vladutImg from "@/assets/vladut-andrei.jpg";
+import patriciaImg from "@/assets/hirstioaga-patricia.jpg";
+import alexandruImg from "@/assets/alexandru-ghita.jpg";
+import annaImg from "@/assets/anna-filip.jpg";
+import dariaGImg from "@/assets/daria-glonteanu.jpg";
+import andreeaImg from "@/assets/andreea-boangher.jpg";
+
 export const Route = createFileRoute("/departamente")({
   head: () => ({
     meta: [
@@ -38,7 +56,6 @@ export const Route = createFileRoute("/departamente")({
 });
 
 // --- DEPARTMENTS DATASET ---
-
 const DEPARTMENTS_DATA = {
   marketing: {
     id: "marketing",
@@ -55,21 +72,21 @@ const DEPARTMENTS_DATA = {
         role: "Manager Marketing 2024-2025",
         quote:
           "Departamentul de Marketing m-a ajutat enorm să mă dezvolt atât personal, cât și profesional. Aici am descoperit cât de creativ și dinamic este acest domeniu și cum pot transforma idei în realitate. Ca manager de marketing, cea mai mare realizare pentru mine este să știu că pot inspira încredere în echipă și în ideile lor. Marketingul nu e doar despre promovare, ci și despre construirea unor relații autentice și de încredere cu oamenii, fie că e vorba de echipă sau de public.",
-        imageFile: "ema-grigorcea.jpg",
+        image: emaImg,
       },
       {
         name: "Cristian Cojocăriță",
         role: "Manager Marketing 2022-2023",
         quote:
-          "Departamentul de Marketing m-a învățat că ideile bune sunt amplificate de o strategie bună. De la postări pe social media, la email marketing și paid ads, în VIP ai șansa să îți formezi mai mult decât o bază despre marketing, care te poate ajuta să te angajezi în domeniu, sau să folosești skilluri în orice proiect pe viitor.",
-        imageFile: "cristian-cojocarita.jpg",
+          "Departamentul de Marketing m-a învățat că ideile bune sunt amplificate de o strategie bună. De la postări pe social media, la email marketing și paid ads, în VIP ai șansa să îți formezi mai mult decât o bază despre marketing, care te poate ajutor să te angajezi în domeniu, sau să folosești skilluri în orice proiect pe viitor.",
+        image: cristianImg,
       },
       {
         name: "Alin Enache",
         role: "Marketing Officer \"GoodToGo\" 2023-2024",
         quote:
           "Dacă aș scrie despre cât de mult îmi place Marketing-ul, probabil aș vorbi despre partea psihologică — că îți arată cum funcționează lumea; sau despre creativitate, sau valoarea sa ca unealtă de afaceri. Dar nu voi spune asta. Voi spune că întrupez marketing-ul. Sunt un marketer și o spun cu mândrie, pentru că nu e doar despre vânzări, metrici și cifre, nici măcar despre a împacheta frumos un produs sau o firmă. Ca marketer, sunt un agent al schimbării — trag să îmbunătățesc viețile oamenilor pe care îi servesc, și asta prin îmbunătățirea mea proprie și a ceea ce ofer. Trăiesc după asta. Și n-aș vrea să fie altfel.",
-        imageFile: "alin-enache.jpg",
+        image: alinImg,
       },
     ],
   },
@@ -93,35 +110,35 @@ const DEPARTMENTS_DATA = {
         role: "PR Manager 2023-2024",
         quote:
           "Departamentul Public Relations a fost locul perfect în care am putut să dobândesc cunoștințe noi și să descopăr ce înseamnă cu adevărat industria comunicării. De la event planning, public speaking, copywriting, campanii și până la crisis management, am acumulat experiențe esențiale pentru cariera mea.",
-        imageFile: "maria-pirvu.jpg",
+        image: mariaImg,
       },
       {
         name: "Lorena Radu",
         role: "PR Officer Storytelling Night 2023-2024",
         quote:
           "Departamentul de PR a fost o surpriză incredibilă pentru mine, m-a ajutat să mă regăsesc și să îmi descopăr potențialul imens pe care îl am în acest domeniu. Mi-a dat oportunitatea de a învăța practic cum să am o exprimare și o structură cât mai corectă în copywriting și content writing, dar mai ales cum să organizez evenimente de la A la Z. Acesta mi-a deschis orizonturi noi și a reușit să mă dezvolte într-o persoană mult mai deschisă, comunicativă și pasionată de ceea ce face.",
-        imageFile: "lorena-radu.jpg",
+        image: lorenaImg,
       },
       {
         name: "Daria Roman",
         role: "PR Manager 2021-2022",
         quote:
           "Pentru mine PR-ul a fost o călătorie despre oameni, despre comunitate și despre importanța lui în organizație. Mi-am dorit să conturez o comunitate de durată cu oameni care erau curioși să descopere mai multe despre PR într-un context fun. Dacă ar fi să sumarizez experiența mea în trei cuvinte ar fi: inspirație, conectare și progres.",
-        imageFile: "daria-roman.jpg",
+        image: dariaRImg,
       },
       {
         name: "Alexandra Scutaru",
         role: "PR",
         quote:
           "VIP-ul m-a ajutat să văd ce înseamnă cu adevărat PR-ul. Este mai mult decât ce știam eu până atunci, și anume scrisul de copy-uri pentru postări. PR înseamnă organizare de evenimente (partea mea favorită), comunicare de criză, content writing, copywriting și multe altele pe care ai ocazia să le descoperi prin VIP! Dă-i o șansă, ieși din zona ta de confort și implică-te! You can do this. 🫶",
-        imageFile: "alexandra-scutaru.jpg",
+        image: alexandraImg,
       },
       {
         name: "Cosmina Dobre",
         role: "PR Officer \"Marketing Experience Academy\" 2023-2024",
         quote:
           "Pentru mine faptul că m-am axat pe departamentul de PR a fost cea mai bună alegere, mi s-a părut unul complex, care mi-a oferit oportunitatea de a mă dezvolta pe foarte multe planuri. Am învățat să fiu mai coerentă în exprimare, să mă adaptez publicului țintă și tone of voice-ului ales prin partea de copywriting, dar și să trec peste teama de a interacționa cu persoane noi, într-un cadru profesional prin contactări. Faptul că echipa a fost așa lovely și mediul de învățare din cadrul trainingurilor a fost foarte friendly a contribuit mult la întreaga experiență.",
-        imageFile: "cosmina-dobre.jpg",
+        image: cosminaImg,
       },
     ],
   },
@@ -140,21 +157,21 @@ const DEPARTMENTS_DATA = {
         role: "Creative",
         quote:
           "Pentru mine, VIP este locul în care latura mea creativă a prins curaj. Deși nu aveam experiență multă în design, echipa din departamentul de Creative m-a susținut și îndrumat spre a-mi exprima ideile și a le transforma în realitate.",
-        imageFile: "teodora-petcu.jpg",
+        image: teodoraImg,
       },
       {
         name: "Ana Popescu",
         role: "Creative",
         quote:
           "VIP pentru mine a fost plasa de siguranță în timpul studenției. A fost locul în care am simțit că pot face greseli, pot învăța și pot fi alături de oameni care împărtășesc aceleași valori ca și mine. Aici pot spune că am reușit să pun o cărămidă extrem de puternică a persoanei care sunt astăzi. Organizația mi-a oferit resurse, oportunități și suport. Iar cel mai important lucru cu care am rămas sunt oamenii care au ajuns să îmi devină prieteni!",
-        imageFile: "ana-popescu.jpg",
+        image: anaImg,
       },
       {
         name: "Vlăduț-Nicolae Andrei",
         role: "Creative",
         quote:
-          "Departamentul de Creative este locul unde poți învăța cum să aduci ideile la realitate, cum să faci cele mai atractive vizualuri și unde poți colabora strâns cu celelalte persoane cel puțin la fel de pasionate ca și tine. \"Creativity is intelligence having fun\"",
-        imageFile: "vladut-andrei.jpg",
+          "Departamentul de Creative este locul unde poți învăța comment să aduci ideile la realitate, cum să faci cele mai atractive vizualuri și unde poți colabora strâns cu celelalte persoane cel puțin la fel de pasionate ca și tine. \"Creativity is intelligence having fun\"",
+        image: vladutImg,
         borderCircle: "border-4 border-[#C1183E]",
       },
     ],
@@ -174,14 +191,14 @@ const DEPARTMENTS_DATA = {
         role: "Manager 2023-2024",
         quote:
           "Postura de manager HR în cadrul VIP a fost o provocare, dar și o oportunitate de descoperire și dezvoltare a propriei persoane. De la coordonarea unor procese complexe până la simpla interacțiune cu oamenii, toate acestea m-au dezvoltat la nivel profesional cât și personal, completându-mi studenția în cel mai frumos mod posibil",
-        imageFile: "hirstioaga-patricia.jpg",
+        image: patriciaImg,
       },
       {
         name: "Alexandru Ghiță",
         role: "HR Officer, HR Becoming 2024",
         quote:
           "Experiența mea în departamentul de HR și de HR driver a fost una care mi-a schimbat percepția asupra relațiilor umane. Pentru mine, HR-ul este cu și despre oameni, unde te poți cunoaște mai bine pe sine, dar și pe cei din jur, iar tu ai șansa să fii cel ce dezvoltă motivația și reușita echipelor din care faci parte! Aceasta este o oportunitate pe care nu o mai întâlnești!",
-        imageFile: "alexandru-ghita.jpg",
+        image: alexandruImg,
       },
     ],
   },
@@ -200,21 +217,21 @@ const DEPARTMENTS_DATA = {
         role: "Manager 2024-2025",
         quote:
           "Experiența mea în cadrul departamentului de Business Development a fost, fără îndoială, una transformatoare. Participarea la diverse activități mi-a oferit nu doar o bază teoretică solidă, ci și experiențe practice esențiale care mi-au consolidat încrederea și competențele. Prin implicarea activă și dorința de a valorifica cunoștințele acumulate, am ajuns, un an mai târziu, să preiau rolul de Manager al departamentului. Această poziție a fost o etapă fundamentală în dezvoltarea mea, contribuind totodata în mod activ la succesul și creșterea organizației.",
-        imageFile: "anna-filip.jpg",
+        image: annaImg,
       },
       {
         name: "Daria Glonțeanu",
         role: "Manager 2023-2024",
         quote:
           "Business Development pentru mine este mai mult decat un spatiu de invatare si dezvoltare accelerata, este locul care te aduce mai aproape de oportunitati reale si conecteaza studentii cu jucatorii mari de pe piata, fiind “motorul” organizatiei. BD a fost singurul departament care mi-a oferit acces la un pachet esential de skill-uri si cunostinte, care m-a scos din zona de confort si care mi-a dat sansa de a ma apropia semnificativ de versiunea mea ideala.",
-        imageFile: "daria-glonteanu.jpg",
+        image: dariaGImg,
       },
       {
         name: "Andreea Boangher",
         role: "Manager 2022-2023",
         quote:
           "Experienta din departamentul de Business Development mi-a schimbat viata. Am pornit la acest drum cu conceptia “vanzarile nu sunt pentru mine”, ca mai apoi sa realizez ca devin pe zi ce trece din ce in ce mai pasionata de acest domeniu. Acest lucru s-a datorat numeroaselor activitati la care am participat, care mi-au construit si consolidat atat o baza teoretica, dar mai ales una practica. Astfel, din dorinta de a valorifica si de a da mai departe informatiile si cunostintele acumulate, am devenit un an mai tarziu managerul departamentului, etapa din viata mea care m-a ajutat mult in formarea mea ca om.",
-        imageFile: "andreea-boangher.jpg",
+        image: andreeaImg,
       },
     ],
   },
@@ -223,23 +240,21 @@ const DEPARTMENTS_DATA = {
 type DeptKey = keyof typeof DEPARTMENTS_DATA;
 
 // Placeholder component for testimonial avatars
-function TestimonialAvatar({ name, imageFile }: { name: string; imageFile: string }) {
+function TestimonialAvatar({ name, image }: { name: string; image?: string }) {
   const [hasError, setHasError] = useState(false);
+  const initials = name.split(" ").map((n) => n[0]).join("").slice(0, 2);
 
-  if (hasError || !imageFile) {
+  if (hasError || !image) {
     return (
       <div className="w-full h-full bg-indigo-brand/10 text-indigo-brand p-2 flex flex-col items-center justify-center text-center select-none">
-        <span className="text-[10px] font-extrabold uppercase tracking-wider">Poză</span>
-        <span className="text-[8px] font-mono opacity-85 mt-1 break-all select-all font-semibold">
-          {imageFile}
-        </span>
+        <span className="text-[10px] font-extrabold uppercase tracking-wider">{initials}</span>
       </div>
     );
   }
 
   return (
     <img
-      src={`/src/assets/${imageFile}`}
+      src={image}
       alt={name}
       className="w-full h-full object-cover filter grayscale contrast-110 hover:grayscale-0 transition-all duration-500"
       onError={() => setHasError(true)}
@@ -399,7 +414,7 @@ function DepartamentePage() {
                   {/* Portrait circle/square */}
                   <div className="flex-shrink-0 mx-auto md:mx-0">
                     <div className={`size-20 md:size-24 rounded-2xl overflow-hidden shadow-sm ${t.borderCircle || "border border-dark/10"}`}>
-                      <TestimonialAvatar name={t.name} imageFile={t.imageFile} />
+                      <TestimonialAvatar name={t.name} image={t.image} />
                     </div>
                   </div>
 

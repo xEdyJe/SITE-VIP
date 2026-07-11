@@ -47,7 +47,7 @@ export function SiteNav() {
             className="pl-1 flex items-center"
             aria-label="VIP Romania — acasă"
           >
-            <img src={logoVip} alt="VIP Romania" className="h-5 w-auto object-contain" />
+            <img src={logoVip} alt="VIP Romania" className="h-8 md:h-10 w-auto object-contain" />
           </Link>
 
           <div className="hidden items-center gap-6 text-xs font-medium uppercase tracking-widest text-dark/60 md:flex">

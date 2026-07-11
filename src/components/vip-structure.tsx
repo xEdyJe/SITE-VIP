@@ -74,7 +74,7 @@ export function VipStructure({ activeCommunityId }: VipStructureProps) {
         <div className="flex flex-col items-center">
           <div className="flex flex-col items-center rounded-2xl border border-dark/10 bg-white px-8 py-3 shadow-sm">
             <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-dark/40">Organizație</span>
-            <img src={logoVip} alt="VIP Romania" className="h-5 w-auto object-contain mt-1" />
+            <img src={logoVip} alt="VIP Romania" className="h-8 w-auto object-contain mt-1" />
           </div>
           
           {/* Connector Line down from NGO */}

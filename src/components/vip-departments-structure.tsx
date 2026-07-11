@@ -216,7 +216,7 @@ export function BusinessDevelopmentIcon({ className = "size-8" }: { className?: 
 // --- GENERAL MINI-ICONS FOR NGO & COMMUNITIES ---
 
 function VipLogo() {
-  return <img src={logoVip} alt="VIP Romania" className="h-5 w-auto object-contain" />;
+  return <img src={logoVip} alt="VIP Romania" className="h-8 w-auto object-contain" />;
 }
 
 function CommunityIcon({ name, className = "size-4" }: { name: string; className?: string }) {
