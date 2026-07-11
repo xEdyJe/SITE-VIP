@@ -164,23 +164,23 @@ const DEPARTMENTS_DATA = {
     icon: "hr",
     desc: "Recrutare, integrarea noilor membri, teambuilding-uri și dezvoltarea echipei.",
     detailDesc:
-      "La Resurse Umane punem oamenii pe primul loc. Ne ocupăm de procesul de recrutare al asociației, onboarding-ul noilor membri, organizarea teambuilding-urilor și monitorizarea climatului intern. Înveți cum să motivezi o echipă, să dezvolți talente și să creezi o cultură organizațională puternică.",
-    activities: ["Recrutare & Selecție", "Training & Dezvoltare", "Teambuilding & Climat", "Evaluare Performanță"],
+      "Aici vei învăța care sunt etapele unei recrutări de succes, atât în ONG-uri, cât și în cele mai mari companii, strategii de employer branding și cum sunt acestea folosite de angajatori, evaluarea performanței prin tehnici de livrare de feedback, crearea unui CV perfect și cultura organizațională din medii corporate.",
+    activities: ["Recrutare & Selecție", "Employer Branding", "Evaluare Performanță"],
     illustration: HumanResourcesIcon,
     testimonials: [
       {
-        name: "Diana Marin",
-        role: "HR Manager 2023-2025",
+        name: "Hîrștioaga Patricia",
+        role: "Manager 2023-2024",
         quote:
-          "Să vezi cum evoluează un membru de la recrutare până când devine lider de proiect este cea mai mare satisfacție. HR-ul în VIP m-a învățat empatia, ascultarea activă și importanța unei comunități unite.",
-        imageFile: "diana-marin.jpg",
+          "Postura de manager HR în cadrul VIP a fost o provocare, dar și o oportunitate de descoperire și dezvoltare a propriei persoane. De la coordonarea unor procese complexe până la simpla interacțiune cu oamenii, toate acestea m-au dezvoltat la nivel profesional cât și personal, completându-mi studenția în cel mai frumos mod posibil",
+        imageFile: "hirstioaga-patricia.jpg",
       },
       {
-        name: "Vlad Dobrescu",
-        role: "Recruitment Coordinator 2022-2023",
+        name: "Alexandru Ghiță",
+        role: "HR Officer, HR Becoming 2024",
         quote:
-          "Am învățat tehnici de interviu, profilare și cum să construiesc dinamici de grup sănătoase. Abilitățile de people management dobândite aici sunt neprețuite în viața profesională.",
-        imageFile: "vlad-dobrescu.jpg",
+          "Experiența mea în departamentul de HR și de HR driver a fost una care mi-a schimbat percepția asupra relațiilor umane. Pentru mine, HR-ul este cu și despre oameni, unde te poți cunoaște mai bine pe sine, dar și pe cei din jur, iar tu ai șansa să fii cel ce dezvoltă motivația și reușita echipelor din care faci parte! Aceasta este o oportunitate pe care nu o mai întâlnești!",
+        imageFile: "alexandru-ghita.jpg",
       },
     ],
   },
@@ -190,23 +190,30 @@ const DEPARTMENTS_DATA = {
     icon: "bd",
     desc: "Parteneriate comerciale, sponsorizări corporate și atragere de resurse financiare.",
     detailDesc:
-      "Business Development reprezintă motorul financiar al organizației. Aici înveți arta vânzărilor corporative, cum să abordezi companii mari, să negociezi contracte și să obții sponsorizări de mii de euro. Dezvolți o mentalitate antreprenorială și îți construiești un network solid în mediul corporate.",
-    activities: ["B2B Sales & Pitching", "Account Management", "Negociere Contracte", "Networking Corporate"],
+      "Aici vei învăța să cercetezi piața și să dezvolți relații cu companiile cheie, dobândind abilități de comunicare, strategie, negociere și persuasiune, ieșind constant din zona de confort.",
+    activities: ["Parteneriate", "Networking valoros", "Dezvoltarea relațiilor de business", "Gândire strategică"],
     illustration: BusinessDevelopmentIcon,
     testimonials: [
       {
-        name: "Robert Nica",
-        role: "BD Director 2024-2025",
+        name: "Anna Filip",
+        role: "Manager 2024-2025",
         quote:
-          "BD-ul m-a scos complet din zona de confort. Să intri în săli de ședință cu manageri de top și să obții bugete te învață negocierea reală și îți dă o încredere în sine fantastică.",
-        imageFile: "robert-nica.jpg",
+          "Experiența mea în cadrul departamentului de Business Development a fost, fără îndoială, una transformatoare. Participarea la diverse activități mi-a oferit nu doar o bază teoretică solidă, ci și experiențe practice esențiale care mi-au consolidat încrederea și competențele. Prin implicarea activă și dorința de a valorifica cunoștințele acumulate, am ajuns, un an mai târziu, să preiau rolul de Manager al departamentului. Această poziție a fost o etapă fundamentală în dezvoltarea mea, contribuind totodata în mod activ la succesul și creșterea organizației.",
+        imageFile: "anna-filip.jpg",
       },
       {
-        name: "Elena Stancu",
-        role: "Partnership Manager 2023-2024",
+        name: "Daria Glonțeanu",
+        role: "Manager 2023-2024",
         quote:
-          "Am învățat cum se creează un parteneriat win-win și cum să mențin relații de lungă durată cu partenerii noștri corporate. Multe din contactele din VIP îmi folosesc și azi în carieră.",
-        imageFile: "elena-stancu.jpg",
+          "Business Development pentru mine este mai mult decat un spatiu de invatare si dezvoltare accelerata, este locul care te aduce mai aproape de oportunitati reale si conecteaza studentii cu jucatorii mari de pe piata, fiind “motorul” organizatiei. BD a fost singurul departament care mi-a oferit acces la un pachet esential de skill-uri si cunostinte, care m-a scos din zona de confort si care mi-a dat sansa de a ma apropia semnificativ de versiunea mea ideala.",
+        imageFile: "daria-glonteanu.jpg",
+      },
+      {
+        name: "Andreea Boangher",
+        role: "Manager 2022-2023",
+        quote:
+          "Experienta din departamentul de Business Development mi-a schimbat viata. Am pornit la acest drum cu conceptia “vanzarile nu sunt pentru mine”, ca mai apoi sa realizez ca devin pe zi ce trece din ce in ce mai pasionata de acest domeniu. Acest lucru s-a datorat numeroaselor activitati la care am participat, care mi-au construit si consolidat atat o baza teoretica, dar mai ales una practica. Astfel, din dorinta de a valorifica si de a da mai departe informatiile si cunostintele acumulate, am devenit un an mai tarziu managerul departamentului, etapa din viata mea care m-a ajutat mult in formarea mea ca om.",
+        imageFile: "andreea-boangher.jpg",
       },
     ],
   },
