@@ -283,38 +283,40 @@ export function VipDepartmentsStructure({ activeDeptId, onSelectDept }: VipDepar
   return (
     <div className="w-full rounded-[2.5rem] border border-indigo-brand/20 bg-white/40 p-6 md:p-12 backdrop-blur-sm shadow-xl shadow-indigo-brand/[0.02]">
       {/* Desktop Blueprint Grid layout */}
-      <div className="hidden lg:grid grid-cols-[160px_1fr] gap-8 relative">
+      <div className="hidden lg:grid grid-cols-[200px_1fr] gap-8 relative">
         
         {/* LEFT COLUMN: Vertical Labels */}
         <div className="flex flex-col justify-between py-6 text-left border-r border-dark/5 pr-4 select-none">
-          <div className="h-[54px] flex items-center">
+          <div className="h-[68px] flex items-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-dark/30">VIP ONG</span>
           </div>
-          <div className="h-[60px] flex items-center">
+          <div className="h-[72px] flex items-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-dark/30">Comunități</span>
           </div>
-          <div className="h-[96px] flex items-center">
+          <div className="h-[124px] flex items-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-indigo-brand font-black">
               → Departamente
             </span>
           </div>
-          <div className="h-[60px] flex items-center">
+          <div className="h-[72px] flex items-center">
             <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-dark/30">Proiecte</span>
           </div>
         </div>
 
         {/* RIGHT COLUMN: The Interactive Tree Hierarchy */}
-        <div className="flex flex-col items-center gap-6 relative">
+        <div className="flex flex-col items-center gap-8 relative">
           
           {/* Level 1: NGO */}
           <div className="z-10 flex flex-col items-center">
-            <div className="flex flex-col items-center rounded-2xl border border-dark/5 bg-white px-8 py-2.5 shadow-sm opacity-50">
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-dark/40">Organizație</span>
-              <VipLogo />
+            <div className="flex flex-col items-center rounded-2xl border border-dark/5 bg-white px-12 py-4 shadow-md opacity-60 hover:scale-[1.02] transition-transform duration-300">
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-dark/40">Organizație</span>
+              <div className="h-10 flex items-center mt-1.5">
+                <VipLogo />
+              </div>
             </div>
             
             {/* Connector Line 1: NGO to Comunități */}
-            <div className="h-6 w-px bg-indigo-brand/20" />
+            <div className="h-8 w-px bg-indigo-brand/20" />
           </div>
 
           {/* Level 2: Comunități (Row of 4) */}
@@ -336,17 +338,17 @@ export function VipDepartmentsStructure({ activeDeptId, onSelectDept }: VipDepar
               {communities.map((c) => (
                 <div
                   key={c.id}
-                  className="flex items-center justify-center gap-2 rounded-xl border border-dark/5 bg-white/70 p-3 text-dark/40 opacity-40 select-none"
+                  className="flex items-center justify-center gap-3 rounded-xl border border-dark/5 bg-white/70 p-4 md:p-4.5 text-dark/40 opacity-45 select-none"
                 >
-                  <CommunityIcon name={c.id} />
-                  <span className="text-[10px] font-bold uppercase tracking-wider">{c.label}</span>
+                  <CommunityIcon name={c.id} className="size-6 shrink-0" />
+                  <span className="text-[11px] md:text-xs font-bold uppercase tracking-wider">{c.label}</span>
                 </div>
               ))}
             </div>
 
             {/* Connector Line 2: Comunități to Departamente */}
             <div className="flex flex-col items-center mt-4">
-              <div className="h-6 w-px bg-indigo-brand/20" />
+              <div className="h-8 w-px bg-indigo-brand/20" />
             </div>
           </div>
 
@@ -365,8 +367,8 @@ export function VipDepartmentsStructure({ activeDeptId, onSelectDept }: VipDepar
             </div>
 
             {/* Department Buttons Container (White wrapper with blue outline as shown in mockup) */}
-            <div className="mt-1 rounded-3xl border border-indigo-brand bg-white p-3.5 shadow-lg shadow-indigo-brand/5">
-              <div className="grid grid-cols-5 gap-3">
+            <div className="mt-1 rounded-3xl border border-indigo-brand bg-white p-4.5 shadow-lg shadow-indigo-brand/5">
+              <div className="grid grid-cols-5 gap-4">
                 {departments.map((d) => {
                   const Icon = d.icon;
                   const isActive = activeDeptId === d.id;
@@ -374,14 +376,14 @@ export function VipDepartmentsStructure({ activeDeptId, onSelectDept }: VipDepar
                     <button
                       key={d.id}
                       onClick={() => onSelectDept(d.id)}
-                      className={`flex flex-col items-center justify-center gap-2.5 rounded-2xl py-3 px-2 transition-all duration-300 cursor-pointer ${
+                      className={`flex flex-col items-center justify-center gap-3.5 rounded-2xl py-4.5 px-3 transition-all duration-300 cursor-pointer ${
                         isActive
                           ? "bg-indigo-brand/5 border border-indigo-brand/20 scale-[1.03] ring-1 ring-indigo-brand/10"
                           : "bg-transparent border border-transparent hover:bg-dark/[0.02]"
                       }`}
                     >
-                      <Icon className={`size-8 transition-transform duration-300 ${isActive ? "scale-110 drop-shadow-sm" : "opacity-80"}`} />
-                      <span className={`text-[10px] font-black uppercase tracking-wider text-center ${
+                      <Icon className={`size-11 transition-transform duration-300 ${isActive ? "scale-110 drop-shadow-sm" : "opacity-80"}`} />
+                      <span className={`text-[11px] md:text-xs font-black uppercase tracking-wider text-center ${
                         isActive ? "text-indigo-brand" : "text-dark/70"
                       }`}>
                         {d.label}
@@ -394,7 +396,7 @@ export function VipDepartmentsStructure({ activeDeptId, onSelectDept }: VipDepar
 
             {/* Connector Line 3: Departamente to Proiecte */}
             <div className="flex flex-col items-center mt-4">
-              <div className="h-6 w-px bg-indigo-brand/20" />
+              <div className="h-8 w-px bg-indigo-brand/20" />
             </div>
           </div>
 
@@ -417,10 +419,10 @@ export function VipDepartmentsStructure({ activeDeptId, onSelectDept }: VipDepar
               {projects.map((p) => (
                 <div
                   key={p.label}
-                  className="flex items-center justify-center gap-2 rounded-xl border border-dark/5 bg-white/70 p-3 text-dark/40 opacity-40 select-none"
+                  className="flex items-center justify-center gap-3 rounded-xl border border-dark/5 bg-white/70 p-4 md:p-4.5 text-dark/40 opacity-45 select-none"
                 >
-                  <ProjectIcon name={p.label} />
-                  <span className="truncate text-[9px] font-bold uppercase tracking-wider">{p.label}</span>
+                  <ProjectIcon name={p.label} className="size-6 shrink-0" />
+                  <span className="truncate text-[10px] md:text-[11px] font-bold uppercase tracking-wider">{p.label}</span>
                 </div>
               ))}
             </div>

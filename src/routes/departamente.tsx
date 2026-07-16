@@ -256,7 +256,7 @@ function TestimonialAvatar({ name, image }: { name: string; image?: string }) {
     <img
       src={image}
       alt={name}
-      className="w-full h-full object-cover filter grayscale contrast-110 hover:grayscale-0 transition-all duration-500"
+      className="w-full h-full object-cover"
       onError={() => setHasError(true)}
     />
   );
@@ -313,11 +313,11 @@ function DepartamentePage() {
 
             {/* Center Image */}
             <div className="lg:col-span-4 flex justify-center relative z-10">
-              <ScrollReveal animation="scale-up" className="w-full max-w-xs aspect-[3/4] overflow-hidden rounded-[2rem] shadow-xl border border-dark/5">
+              <ScrollReveal animation="scale-up" className="w-full max-w-xs aspect-[3/4] overflow-hidden rounded-[2rem] shadow-xl border border-dark/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
                 <img
                   src={departamentGrupImg}
                   alt="Membri VIP cooperând"
-                  className="w-full h-full object-cover filter grayscale contrast-110 hover:grayscale-0 transition-all duration-700 ease-out"
+                  className="w-full h-full object-cover"
                 />
               </ScrollReveal>
             </div>
@@ -410,10 +410,10 @@ function DepartamentePage() {
                 delay={idx * 100}
                 animation="fade-up"
               >
-                <div className="rounded-3xl bg-[#EBF1FF]/40 border border-indigo-brand/5 p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start text-left hover:shadow-md transition-shadow">
+                <div className="rounded-[2rem] bg-white border border-indigo-brand/20 p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start text-left shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:-translate-y-2 hover:shadow-xl hover:border-indigo-brand/45 hover:scale-[1.01] transition-all duration-300 cursor-pointer group">
                   {/* Portrait circle/square */}
                   <div className="flex-shrink-0 mx-auto md:mx-0">
-                    <div className={`size-20 md:size-24 rounded-2xl overflow-hidden shadow-sm ${t.borderCircle || "border border-dark/10"}`}>
+                    <div className={`size-20 md:size-24 rounded-2xl overflow-hidden shadow-sm ${'borderCircle' in t ? (t as any).borderCircle : "border border-indigo-brand/10"} transition-transform duration-300 group-hover:scale-105`}>
                       <TestimonialAvatar name={t.name} image={t.image} />
                     </div>
                   </div>

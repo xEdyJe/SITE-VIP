@@ -8,7 +8,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, useRef, type ReactNode } from "react";
 import Lenis from "lenis";
 
 import appCss from "../styles.css?url";
@@ -130,19 +130,25 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const barRef = useRef<HTMLDivElement>(null);
   const routerState = useRouterState();
   const pathname = routerState.location.pathname;
   const [curtainState, setCurtainState] = useState<"idle" | "closing" | "opening">("idle");
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) {
-        setScrollProgress((window.scrollY / totalScroll) * 100);
+      const progress = totalScroll > 0 ? (window.scrollY / totalScroll) * 100 : 0;
+      if (barRef.current) {
+        barRef.current.style.transform = `scaleX(${progress / 100})`;
       }
+      
+      const pastThreshold = window.scrollY > 400;
+      setShowBackToTop((prev) => (prev !== pastThreshold ? pastThreshold : prev));
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -197,12 +203,32 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div 
-        className="fixed top-0 left-0 z-50 h-1 bg-indigo-brand transition-all duration-75"
-        style={{ width: `${scrollProgress}%` }}
+        ref={barRef}
+        className="fixed top-0 left-0 z-50 h-1 bg-indigo-brand w-full origin-left will-change-transform transition-transform duration-75"
+        style={{ transform: 'scaleX(0)' }}
       />
       
       {/* Curtain Transition Overlay */}
       <div className={`curtain-overlay curtain-${curtainState}`} />
+
+      {/* Back to Top Button */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className={`fixed bottom-8 right-8 z-40 flex size-12 cursor-pointer items-center justify-center rounded-full bg-indigo-brand text-white shadow-lg shadow-indigo-brand/35 transition-all duration-300 hover:bg-indigo-600 hover:scale-110 active:scale-95 ${
+          showBackToTop ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-75 pointer-events-none"
+        }`}
+        aria-label="Back to top"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          className="size-5"
+        >
+          <path d="M12 19V5M5 12l7-7 7 7" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
 
       <Outlet />
     </QueryClientProvider>

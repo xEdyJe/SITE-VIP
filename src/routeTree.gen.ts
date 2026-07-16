@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ProiecteRouteImport } from './routes/proiecte'
+import { Route as ParteneriRouteImport } from './routes/parteneri'
+import { Route as DespreNoiRouteImport } from './routes/despre-noi'
 import { Route as DepartamenteRouteImport } from './routes/departamente'
 import { Route as AplicaRouteImport } from './routes/aplica'
 import { Route as IndexRouteImport } from './routes/index'
@@ -18,6 +21,21 @@ import { Route as ComunitatiIdRouteImport } from './routes/comunitati.$id'
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProiecteRoute = ProiecteRouteImport.update({
+  id: '/proiecte',
+  path: '/proiecte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParteneriRoute = ParteneriRouteImport.update({
+  id: '/parteneri',
+  path: '/parteneri',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DespreNoiRoute = DespreNoiRouteImport.update({
+  id: '/despre-noi',
+  path: '/despre-noi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DepartamenteRoute = DepartamenteRouteImport.update({
@@ -45,6 +63,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aplica': typeof AplicaRoute
   '/departamente': typeof DepartamenteRoute
+  '/despre-noi': typeof DespreNoiRoute
+  '/parteneri': typeof ParteneriRoute
+  '/proiecte': typeof ProiecteRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/comunitati/$id': typeof ComunitatiIdRoute
 }
@@ -52,6 +73,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/aplica': typeof AplicaRoute
   '/departamente': typeof DepartamenteRoute
+  '/despre-noi': typeof DespreNoiRoute
+  '/parteneri': typeof ParteneriRoute
+  '/proiecte': typeof ProiecteRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/comunitati/$id': typeof ComunitatiIdRoute
 }
@@ -60,20 +84,41 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/aplica': typeof AplicaRoute
   '/departamente': typeof DepartamenteRoute
+  '/despre-noi': typeof DespreNoiRoute
+  '/parteneri': typeof ParteneriRoute
+  '/proiecte': typeof ProiecteRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/comunitati/$id': typeof ComunitatiIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/aplica' | '/departamente' | '/sitemap.xml' | '/comunitati/$id'
+    | '/'
+    | '/aplica'
+    | '/departamente'
+    | '/despre-noi'
+    | '/parteneri'
+    | '/proiecte'
+    | '/sitemap.xml'
+    | '/comunitati/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/aplica' | '/departamente' | '/sitemap.xml' | '/comunitati/$id'
+  to:
+    | '/'
+    | '/aplica'
+    | '/departamente'
+    | '/despre-noi'
+    | '/parteneri'
+    | '/proiecte'
+    | '/sitemap.xml'
+    | '/comunitati/$id'
   id:
     | '__root__'
     | '/'
     | '/aplica'
     | '/departamente'
+    | '/despre-noi'
+    | '/parteneri'
+    | '/proiecte'
     | '/sitemap.xml'
     | '/comunitati/$id'
   fileRoutesById: FileRoutesById
@@ -82,6 +127,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AplicaRoute: typeof AplicaRoute
   DepartamenteRoute: typeof DepartamenteRoute
+  DespreNoiRoute: typeof DespreNoiRoute
+  ParteneriRoute: typeof ParteneriRoute
+  ProiecteRoute: typeof ProiecteRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ComunitatiIdRoute: typeof ComunitatiIdRoute
 }
@@ -93,6 +141,27 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proiecte': {
+      id: '/proiecte'
+      path: '/proiecte'
+      fullPath: '/proiecte'
+      preLoaderRoute: typeof ProiecteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parteneri': {
+      id: '/parteneri'
+      path: '/parteneri'
+      fullPath: '/parteneri'
+      preLoaderRoute: typeof ParteneriRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/despre-noi': {
+      id: '/despre-noi'
+      path: '/despre-noi'
+      fullPath: '/despre-noi'
+      preLoaderRoute: typeof DespreNoiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/departamente': {
@@ -130,6 +199,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AplicaRoute: AplicaRoute,
   DepartamenteRoute: DepartamenteRoute,
+  DespreNoiRoute: DespreNoiRoute,
+  ParteneriRoute: ParteneriRoute,
+  ProiecteRoute: ProiecteRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ComunitatiIdRoute: ComunitatiIdRoute,
 }
