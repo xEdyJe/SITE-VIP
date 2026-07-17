@@ -239,11 +239,11 @@ function AplicaPage() {
       return;
     }
 
-    // Detect if we're on an OAuth callback (?code= from PKCE or #access_token from implicit)
+    // Check if we're on an OAuth callback (PKCE sends ?code= as a query param)
     const url = new URL(window.location.href);
-    const hasOAuthCode = url.searchParams.has("code");
+    const oauthCode = url.searchParams.get("code");
 
-    // Subscribe to auth state changes — this fires when PKCE code exchange completes
+    // Subscribe to auth changes — fires when PKCE exchange completes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
@@ -252,23 +252,26 @@ function AplicaPage() {
           email: session.user.email || prev.email,
           fullName: session.user.user_metadata?.full_name || prev.fullName,
         }));
-        // Clean up the ?code= from URL after successful auth (cosmetic)
-        if (hasOAuthCode) {
-          window.history.replaceState({}, "", window.location.pathname);
-        }
+        // Remove ?code= from the URL bar after successful login
+        window.history.replaceState({}, "", window.location.pathname);
       }
       setLoadingUser(false);
     });
 
-    // Only call getSession() immediately if there's NO pending PKCE code exchange.
-    // If ?code= is in the URL, the SDK is already exchanging it — onAuthStateChange will fire.
-    if (!hasOAuthCode) {
+    if (oauthCode) {
+      // Explicitly exchange the PKCE authorization code for a session.
+      // This is more reliable than relying on detectSessionInUrl with TanStack Router.
+      supabase.auth.exchangeCodeForSession(oauthCode).catch((err) => {
+        console.error("[Auth] PKCE code exchange failed:", err?.message ?? err);
+        setLoadingUser(false); // Show login screen on failure
+      });
+    } else {
+      // No OAuth callback — check for an existing persisted session
       supabase.auth.getSession().then(({ data: { session } }) => {
         if (!session) {
-          // No session and no code exchange pending — show login screen
-          setLoadingUser(false);
+          setLoadingUser(false); // No session → show login
         }
-        // If session exists, onAuthStateChange already fired or will fire shortly
+        // If session exists, onAuthStateChange fires and handles it
       });
     }
 
