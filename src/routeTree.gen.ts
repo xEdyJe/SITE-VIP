@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProiecteRouteImport } from './routes/proiecte'
+import { Route as PoliticaDeConfidentialitateRouteImport } from './routes/politica-de-confidentialitate'
 import { Route as ParteneriRouteImport } from './routes/parteneri'
 import { Route as DespreNoiRouteImport } from './routes/despre-noi'
 import { Route as DepartamenteRouteImport } from './routes/departamente'
@@ -28,6 +29,12 @@ const ProiecteRoute = ProiecteRouteImport.update({
   path: '/proiecte',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PoliticaDeConfidentialitateRoute =
+  PoliticaDeConfidentialitateRouteImport.update({
+    id: '/politica-de-confidentialitate',
+    path: '/politica-de-confidentialitate',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ParteneriRoute = ParteneriRouteImport.update({
   id: '/parteneri',
   path: '/parteneri',
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/departamente': typeof DepartamenteRoute
   '/despre-noi': typeof DespreNoiRoute
   '/parteneri': typeof ParteneriRoute
+  '/politica-de-confidentialitate': typeof PoliticaDeConfidentialitateRoute
   '/proiecte': typeof ProiecteRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/comunitati/$id': typeof ComunitatiIdRoute
@@ -75,6 +83,7 @@ export interface FileRoutesByTo {
   '/departamente': typeof DepartamenteRoute
   '/despre-noi': typeof DespreNoiRoute
   '/parteneri': typeof ParteneriRoute
+  '/politica-de-confidentialitate': typeof PoliticaDeConfidentialitateRoute
   '/proiecte': typeof ProiecteRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/comunitati/$id': typeof ComunitatiIdRoute
@@ -86,6 +95,7 @@ export interface FileRoutesById {
   '/departamente': typeof DepartamenteRoute
   '/despre-noi': typeof DespreNoiRoute
   '/parteneri': typeof ParteneriRoute
+  '/politica-de-confidentialitate': typeof PoliticaDeConfidentialitateRoute
   '/proiecte': typeof ProiecteRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/comunitati/$id': typeof ComunitatiIdRoute
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/departamente'
     | '/despre-noi'
     | '/parteneri'
+    | '/politica-de-confidentialitate'
     | '/proiecte'
     | '/sitemap.xml'
     | '/comunitati/$id'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/departamente'
     | '/despre-noi'
     | '/parteneri'
+    | '/politica-de-confidentialitate'
     | '/proiecte'
     | '/sitemap.xml'
     | '/comunitati/$id'
@@ -118,6 +130,7 @@ export interface FileRouteTypes {
     | '/departamente'
     | '/despre-noi'
     | '/parteneri'
+    | '/politica-de-confidentialitate'
     | '/proiecte'
     | '/sitemap.xml'
     | '/comunitati/$id'
@@ -129,6 +142,7 @@ export interface RootRouteChildren {
   DepartamenteRoute: typeof DepartamenteRoute
   DespreNoiRoute: typeof DespreNoiRoute
   ParteneriRoute: typeof ParteneriRoute
+  PoliticaDeConfidentialitateRoute: typeof PoliticaDeConfidentialitateRoute
   ProiecteRoute: typeof ProiecteRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ComunitatiIdRoute: typeof ComunitatiIdRoute
@@ -148,6 +162,13 @@ declare module '@tanstack/react-router' {
       path: '/proiecte'
       fullPath: '/proiecte'
       preLoaderRoute: typeof ProiecteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-de-confidentialitate': {
+      id: '/politica-de-confidentialitate'
+      path: '/politica-de-confidentialitate'
+      fullPath: '/politica-de-confidentialitate'
+      preLoaderRoute: typeof PoliticaDeConfidentialitateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/parteneri': {
@@ -201,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   DepartamenteRoute: DepartamenteRoute,
   DespreNoiRoute: DespreNoiRoute,
   ParteneriRoute: ParteneriRoute,
+  PoliticaDeConfidentialitateRoute: PoliticaDeConfidentialitateRoute,
   ProiecteRoute: ProiecteRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ComunitatiIdRoute: ComunitatiIdRoute,

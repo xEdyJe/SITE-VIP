@@ -239,11 +239,10 @@ function AplicaPage() {
       return;
     }
 
-    // Check if we're on an OAuth callback (PKCE sends ?code= as a query param)
-    const url = new URL(window.location.href);
-    const oauthCode = url.searchParams.get("code");
+    // Detect if we're on an OAuth callback (PKCE uses ?code=, implicit uses #access_token=)
+    const isAuthCallback = window.location.hash.includes("access_token=") || window.location.search.includes("code=");
 
-    // Subscribe to auth changes — fires when PKCE exchange completes
+    // Subscribe first so we catch any auth events that fire during getSession()
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
@@ -252,28 +251,34 @@ function AplicaPage() {
           email: session.user.email || prev.email,
           fullName: session.user.user_metadata?.full_name || prev.fullName,
         }));
-        // Remove ?code= from the URL bar after successful login
-        window.history.replaceState({}, "", window.location.pathname);
+        // Clean up token hash or code from URL bar
+        if (isAuthCallback) {
+          window.history.replaceState({}, "", window.location.pathname);
+        }
       }
       setLoadingUser(false);
     });
 
-    if (oauthCode) {
-      // Explicitly exchange the PKCE authorization code for a session.
-      // This is more reliable than relying on detectSessionInUrl with TanStack Router.
-      supabase.auth.exchangeCodeForSession(oauthCode).catch((err) => {
-        console.error("[Auth] PKCE code exchange failed:", err?.message ?? err);
-        setLoadingUser(false); // Show login screen on failure
-      });
-    } else {
-      // No OAuth callback — check for an existing persisted session
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (!session) {
-          setLoadingUser(false); // No session → show login
+    // getSession() triggers detectSessionInUrl
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser(session.user);
+        setFormData(prev => ({
+          ...prev,
+          email: session.user.email || prev.email,
+          fullName: session.user.user_metadata?.full_name || prev.fullName,
+        }));
+        if (isAuthCallback) {
+          window.history.replaceState({}, "", window.location.pathname);
         }
-        // If session exists, onAuthStateChange fires and handles it
-      });
-    }
+        setLoadingUser(false);
+      } else if (!isAuthCallback) {
+        // If there's no session AND we're not waiting for a callback to process,
+        // then we safely show the login screen.
+        setLoadingUser(false);
+      }
+      // If isAuthCallback is true, we wait for onAuthStateChange to fire.
+    });
 
     return () => subscription.unsubscribe();
   }, []);
@@ -411,18 +416,23 @@ function AplicaPage() {
   }, [activeStep]);
 
   // ── Auth handlers ──
+  const enableOfflineMode = () => {
+    setUseLocalStorageFallback(true);
+    setUser({
+      id: "local-user-id",
+      email: "test.student@gmail.com",
+      user_metadata: { full_name: "Student VIP" },
+    });
+    setFormData(prev => ({
+      ...prev,
+      email: "test.student@gmail.com",
+      fullName: "Student VIP",
+    }));
+  };
+
   const handleGoogleLogin = async () => {
     if (useLocalStorageFallback) {
-      setUser({
-        id: "local-user-id",
-        email: "test.student@gmail.com",
-        user_metadata: { full_name: "Student VIP" },
-      });
-      setFormData(prev => ({
-        ...prev,
-        email: "test.student@gmail.com",
-        fullName: "Student VIP",
-      }));
+      enableOfflineMode();
       return;
     }
 
@@ -759,7 +769,7 @@ function AplicaPage() {
                 Timp de completare estimat: 5 min
               </span>
               <button 
-                onClick={() => setUseLocalStorageFallback(true)}
+                onClick={enableOfflineMode}
                 className="text-[9px] font-bold text-indigo-brand/60 hover:text-indigo-brand uppercase tracking-wider cursor-pointer mt-2 underline"
               >
                 Nu doresc salvarea online (utilizează browser local)

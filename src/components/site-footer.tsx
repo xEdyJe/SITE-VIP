@@ -102,6 +102,13 @@ export function SiteFooter() {
               Donează 3.5%
             </a>
             <span className="text-dark/15">·</span>
+            <Link
+              to="/politica-de-confidentialitate"
+              className="hover:text-indigo-brand transition-colors"
+            >
+              Politica de Confidențialitate
+            </Link>
+            <span className="text-dark/15">·</span>
             <span>Est. 1998</span>
           </div>
         </div>
