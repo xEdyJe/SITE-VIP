@@ -239,18 +239,11 @@ function AplicaPage() {
       return;
     }
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        setFormData(prev => ({
-          ...prev,
-          email: session.user.email || prev.email,
-          fullName: session.user.user_metadata?.full_name || prev.fullName,
-        }));
-      }
-      setLoadingUser(false);
-    });
+    // Detect if we're on an OAuth callback (?code= from PKCE or #access_token from implicit)
+    const url = new URL(window.location.href);
+    const hasOAuthCode = url.searchParams.has("code");
 
+    // Subscribe to auth state changes — this fires when PKCE code exchange completes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
@@ -259,9 +252,25 @@ function AplicaPage() {
           email: session.user.email || prev.email,
           fullName: session.user.user_metadata?.full_name || prev.fullName,
         }));
+        // Clean up the ?code= from URL after successful auth (cosmetic)
+        if (hasOAuthCode) {
+          window.history.replaceState({}, "", window.location.pathname);
+        }
       }
       setLoadingUser(false);
     });
+
+    // Only call getSession() immediately if there's NO pending PKCE code exchange.
+    // If ?code= is in the URL, the SDK is already exchanging it — onAuthStateChange will fire.
+    if (!hasOAuthCode) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (!session) {
+          // No session and no code exchange pending — show login screen
+          setLoadingUser(false);
+        }
+        // If session exists, onAuthStateChange already fired or will fire shortly
+      });
+    }
 
     return () => subscription.unsubscribe();
   }, []);
