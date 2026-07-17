@@ -438,9 +438,8 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div
-      className={`rounded-2xl border border-dark/5 bg-ivory/30 transition-all duration-300 ${
-        isOpen ? "shadow-md bg-white border-indigo-brand/10" : "hover:bg-ivory/50"
-      }`}
+      className={`rounded-2xl border border-dark/5 bg-ivory/30 transition-all duration-300 ${isOpen ? "shadow-md bg-white border-indigo-brand/10" : "hover:bg-ivory/50"
+        }`}
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -448,9 +447,8 @@ function FaqItem({ q, a }: { q: string; a: string }) {
       >
         <span className="font-bold text-dark text-base pr-4">{q}</span>
         <svg
-          className={`w-5 h-5 text-dark/40 transition-transform duration-300 shrink-0 ${
-            isOpen ? "transform rotate-180 text-indigo-brand" : ""
-          }`}
+          className={`w-5 h-5 text-dark/40 transition-transform duration-300 shrink-0 ${isOpen ? "transform rotate-180 text-indigo-brand" : ""
+            }`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -460,9 +458,8 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         </svg>
       </button>
       <div
-        className={`transition-all duration-300 overflow-hidden ${
-          isOpen ? "max-h-[300px] border-t border-dark/5" : "max-h-0"
-        }`}
+        className={`transition-all duration-300 overflow-hidden ${isOpen ? "max-h-[300px] border-t border-dark/5" : "max-h-0"
+          }`}
       >
         <div className="p-6 text-sm text-dark/70 leading-relaxed bg-white/50">
           {a}
@@ -488,6 +485,16 @@ function CommunityPage() {
   const [activePage, setActivePage] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  const getGlowColor = () => {
+    switch (id) {
+      case "business-club": return "rgba(249, 115, 22, 0.22)";
+      case "econosofia": return "rgba(61, 174, 229, 0.22)";
+      case "international-affairs": return "rgba(168, 85, 247, 0.22)";
+      case "leadership-development": return "rgba(16, 185, 129, 0.22)";
+      default: return "rgba(61, 174, 229, 0.22)";
+    }
+  };
+
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
@@ -509,6 +516,11 @@ function CommunityPage() {
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-dark/65" />
+          {/* Brand spotlight glow */}
+          <div
+            className="absolute inset-0 mix-blend-screen"
+            style={{ backgroundImage: `radial-gradient(circle at center, ${getGlowColor()}, transparent 65%)` }}
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ivory" />
         </div>
 
@@ -628,14 +640,14 @@ function CommunityPage() {
             </p>
           </ScrollReveal>
 
-          <div 
+          <div
             className="flex flex-col gap-6 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)] py-4"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
             {/* Row 1: slides left */}
             <div className="overflow-hidden">
-              <div 
+              <div
                 className="flex w-max gap-6 transition-transform duration-[1200ms] ease-[cubic-bezier(0.85,0,0.15,1)] pr-6"
                 style={{ transform: activePage === 0 ? 'translateX(0)' : 'translateX(calc(-50% - 12px))' }}
               >
@@ -657,7 +669,7 @@ function CommunityPage() {
 
             {/* Row 2: slides right */}
             <div className="overflow-hidden">
-              <div 
+              <div
                 className="flex w-max gap-6 transition-transform duration-[1200ms] ease-[cubic-bezier(0.85,0,0.15,1)] pr-6"
                 style={{ transform: activePage === 0 ? 'translateX(calc(-50% - 12px))' : 'translateX(0)' }}
               >
@@ -714,14 +726,14 @@ function CommunityPage() {
         <span
           aria-hidden
           className={`pointer-events-none absolute -bottom-6 right-0 select-none whitespace-nowrap font-serif italic text-[10vw] md:text-[16vw] font-bold leading-none tracking-tighter ${id === "business-club"
-              ? "text-orange-600/10"
-              : id === "econosofia"
-                ? "text-sky-600/10"
-                : id === "international-affairs"
-                  ? "text-indigo-600/10"
-                  : id === "leadership-development"
-                    ? "text-emerald-600/10"
-                    : "text-dark/5"
+            ? "text-orange-600/10"
+            : id === "econosofia"
+              ? "text-sky-600/10"
+              : id === "international-affairs"
+                ? "text-indigo-600/10"
+                : id === "leadership-development"
+                  ? "text-emerald-600/10"
+                  : "text-dark/5"
             }`}
         >
           testimoniale

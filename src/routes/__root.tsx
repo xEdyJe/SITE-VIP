@@ -13,6 +13,7 @@ import Lenis from "lenis";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import curtainLogo from "../assets/logo vip pt cortina.png";
 
 function NotFoundComponent() {
   return (
@@ -209,7 +210,9 @@ function RootComponent() {
       />
       
       {/* Curtain Transition Overlay */}
-      <div className={`curtain-overlay curtain-${curtainState}`} />
+      <div className={`curtain-overlay curtain-${curtainState}`}>
+        <img src={curtainLogo} alt="VIP" className="curtain-logo" />
+      </div>
 
       {/* Back to Top Button */}
       <button

@@ -295,7 +295,7 @@ function DepartamentePage() {
       </section>
 
       {/* THEORY AND PRACTICE SECTION */}
-      <section className="bg-white py-20 md:py-28 border-y border-dark/5 overflow-hidden">
+      <section className="bg-white py-20 md:py-28 border-y border-dark/12 overflow-hidden">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-12 lg:gap-8">
             {/* Left stacked text (Asymmetric overlap style) */}
@@ -353,7 +353,7 @@ function DepartamentePage() {
       </section>
 
       {/* ACTIVE DEPARTMENT DETAIL CONTAINER */}
-      <section className="bg-white py-12 md:py-16 border-t border-dark/5">
+      <section className="bg-white py-12 md:py-16 border-t border-dark/12">
         <div className="container mx-auto px-6 max-w-5xl">
           {/* Detail card */}
           <ScrollReveal animation="fade-up">

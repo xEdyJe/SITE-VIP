@@ -1,6 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState, useRef } from "react";
-import logoVip from "@/assets/logo negru vip.png";
+import logoVip from "@/assets/logo vip.png";
+import logoVipDark from "@/assets/logo dark mode vip nou.png";
 
 const communitiesDropdown = [
   { label: "Business Club", href: "/comunitati/business-club" },
@@ -22,6 +23,34 @@ export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const routerState = useRouterState();
   const pathname = routerState.location.pathname;
+
+  // Theme management state
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  // Load and apply theme on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    const initialTheme = savedTheme || systemTheme;
+    
+    setTheme(initialTheme);
+    if (initialTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
 
   // Scroll detection for nav appearance
   useEffect(() => {
@@ -66,7 +95,8 @@ export function SiteNav() {
         >
           {/* Logo */}
           <Link to="/" className="pl-1 flex items-center" aria-label="VIP Romania — acasă">
-            <img src={logoVip} alt="VIP Romania" className="h-9 md:h-11 w-auto object-contain shrink-0 transition-all duration-300" />
+            <img src={logoVip} alt="VIP Romania" className="h-9 md:h-11 w-auto object-contain shrink-0 transition-all duration-300 dark:hidden" />
+            <img src={logoVipDark} alt="VIP Romania" className="h-9 md:h-11 w-auto object-contain shrink-0 transition-all duration-300 hidden dark:block" />
           </Link>
 
           {/* Desktop Links */}
@@ -125,9 +155,43 @@ export function SiteNav() {
 
           {/* CTA + Hamburger */}
           <div className="flex items-center gap-2">
+            {/* Theme Toggle Button (Desktop) */}
+            <button
+              onClick={toggleTheme}
+              className="relative flex size-9 items-center justify-center rounded-full border border-dark/10 bg-white/20 text-dark/70 hover:text-dark hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shadow-sm overflow-hidden dark:border-white/10 dark:text-white/80 dark:hover:text-white shrink-0"
+              aria-label="Toggle theme"
+            >
+              <div className="relative size-5 overflow-hidden">
+                {/* Sun Icon */}
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  className={`absolute inset-0 size-5 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                    theme === "dark" ? "rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"
+                  }`}
+                >
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                </svg>
+
+                {/* Moon Icon */}
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className={`absolute inset-0 size-5 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                    theme === "dark" ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0"
+                  }`}
+                >
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                </svg>
+              </div>
+            </button>
+
             <Link
               to="/aplica"
-              className="hidden rounded-full bg-dark px-5 py-2 text-xs font-bold uppercase tracking-wider text-ivory transition-all hover:bg-indigo-brand hover:scale-[1.03] active:scale-[0.97] sm:inline-flex"
+              className="hidden rounded-full bg-dark px-5 py-2 text-xs font-bold uppercase tracking-wider text-ivory transition-all hover:bg-indigo-brand hover:scale-[1.03] active:scale-[0.97] sm:inline-flex dark:bg-white dark:text-dark dark:hover:bg-indigo-brand dark:hover:text-white"
             >
               Aplică
             </Link>
@@ -193,10 +257,49 @@ export function SiteNav() {
             ))}
           </div>
 
+          {/* Theme Toggle Button (Mobile) */}
+          <div className="mt-2">
+            <button
+              onClick={toggleTheme}
+              className="relative flex h-10 px-5 items-center justify-center gap-2.5 rounded-full border border-dark/10 bg-dark/5 text-dark/70 hover:text-dark transition-all duration-300 cursor-pointer shadow-sm overflow-hidden dark:border-white/10 dark:text-white/80 dark:hover:text-white"
+              aria-label="Toggle theme"
+            >
+              <div className="relative size-5 overflow-hidden shrink-0">
+                {/* Sun Icon */}
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  className={`absolute inset-0 size-5 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                    theme === "dark" ? "rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"
+                  }`}
+                >
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                </svg>
+
+                {/* Moon Icon */}
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className={`absolute inset-0 size-5 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                    theme === "dark" ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0"
+                  }`}
+                >
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                </svg>
+              </div>
+              <span className="text-xs font-bold uppercase tracking-wider">
+                {theme === "dark" ? "Mod Noapte" : "Mod Zi"}
+              </span>
+            </button>
+          </div>
+
           <Link
             to="/aplica"
             onClick={() => setOpen(false)}
-            className="mt-4 inline-flex rounded-full bg-indigo-brand px-8 py-4 text-xs font-bold uppercase tracking-widest text-white shadow-lg shadow-indigo-brand/20"
+            className="mt-4 inline-flex rounded-full bg-indigo-brand px-8 py-4 text-xs font-bold uppercase tracking-widest text-white shadow-lg shadow-indigo-brand/20 dark:bg-white dark:text-dark dark:hover:bg-indigo-brand dark:hover:text-white"
           >
             Aplică acum
           </Link>

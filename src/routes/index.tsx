@@ -228,6 +228,21 @@ function Index() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+
+  const getCommunityColor = (com: string) => {
+    switch (com) {
+      case "Business Club":
+        return "bg-orange-500/10 text-orange-500 border border-orange-500/10";
+      case "Econosofia":
+        return "bg-sky-500/10 text-sky-500 border border-sky-500/10";
+      case "International Affairs":
+        return "bg-purple-500/10 text-purple-500 border border-purple-500/10";
+      case "Leadership Development":
+        return "bg-emerald-500/10 text-emerald-500 border border-emerald-500/10";
+      default:
+        return "bg-indigo-brand/8 text-indigo-brand";
+    }
+  };
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Testimonial autoplay
@@ -262,7 +277,7 @@ function Index() {
           <img src={beachGroupLarge} alt="Membrii VIP Romania" className="h-full w-full object-cover" width={1920} height={1080} />
           {/* Gradient mesh overlay */}
           <div className="absolute inset-x-0 top-0 -bottom-[4px]" style={{
-            background: "radial-gradient(ellipse at 20% 50%, oklch(0.51 0.22 275 / 25%) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, oklch(0.55 0.18 295 / 20%) 0%, transparent 40%), linear-gradient(to bottom, oklch(0.1 0.01 285 / 50%) 0%, oklch(0.15 0.01 285 / 75%) 100%)"
+            background: "radial-gradient(ellipse at 20% 50%, color-mix(in srgb, var(--indigo-brand) 25%, transparent) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, color-mix(in srgb, var(--indigo-brand) 20%, transparent) 0%, transparent 40%), linear-gradient(to bottom, oklch(0.1 0.01 285 / 50%) 0%, oklch(0.15 0.01 285 / 75%) 100%)"
           }} />
         </div>
 
@@ -295,15 +310,13 @@ function Index() {
                   Asociația studențească cu o structură inovativă de dezvoltare a tinerilor — 4 comunități, 5 departamente și proiecte cu impact real.
                 </p>
                 <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-                  <a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSeiu5v_t-RCf_pfDm7pa5ohJ_aTicOy2dINeNhTrUQ0XH1MzQ/viewform"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to="/aplica"
                     className="magnetic-btn inline-flex items-center gap-2.5 rounded-full bg-white px-8 py-4 text-xs font-bold uppercase tracking-widest text-indigo-brand shadow-xl transition-all hover:shadow-indigo-brand/30 hover:scale-[1.04] active:scale-[0.97]"
                   >
                     Înscrie-te acum
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="size-4"><path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </a>
+                  </Link>
                   <a
                     href="https://formular230.ro/voluntari-pentru-idei-si-proiecte"
                     target="_blank" rel="noopener noreferrer"
@@ -712,7 +725,9 @@ function Index() {
                   <p className="font-bold text-dark">{testimonials[currentTestimonial].name}</p>
                   <p className="text-sm text-dark/55 mt-0.5">{testimonials[currentTestimonial].role}</p>
                   <div className="mt-3 flex flex-wrap gap-2">
-                    <span className="rounded-full bg-indigo-brand/8 px-3 py-1 text-[9px] font-bold uppercase tracking-widest text-indigo-brand">{testimonials[currentTestimonial].com}</span>
+                    <span className={`rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-widest ${getCommunityColor(testimonials[currentTestimonial].com)}`}>
+                      {testimonials[currentTestimonial].com}
+                    </span>
                     <span className="rounded-full bg-dark/5 px-3 py-1 text-[9px] font-bold uppercase tracking-widest text-dark/40">An {testimonials[currentTestimonial].year}</span>
                   </div>
                 </div>

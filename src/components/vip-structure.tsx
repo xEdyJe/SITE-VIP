@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import logoVip from "@/assets/logo negru vip.png";
+import logoVip from "@/assets/logo vip.png";
+import logoVipDark from "@/assets/logo dark mode vip nou.png";
 
 // Community Logos
 import bcTreeLogo from "@/assets/logouri si altele/LOGO BC PT TREE.png";
@@ -108,7 +109,8 @@ export function VipStructure({ activeCommunityId }: VipStructureProps) {
         <div className="flex flex-col items-center">
           <div className="flex flex-col items-center rounded-2xl border border-dark/10 bg-white px-12 py-4.5 shadow-md hover:scale-[1.02] transition-transform duration-300">
             <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-dark/40">Organizație</span>
-            <img src={logoVip} alt="VIP Romania" className="h-10 w-auto object-contain mt-1.5" />
+            <img src={logoVip} alt="VIP Romania" className="h-10 w-auto object-contain mt-1.5 dark:hidden" />
+            <img src={logoVipDark} alt="VIP Romania" className="h-10 w-auto object-contain mt-1.5 hidden dark:block" />
           </div>
 
           {/* Connector Line down from NGO */}

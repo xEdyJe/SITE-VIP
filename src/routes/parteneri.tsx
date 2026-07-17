@@ -134,6 +134,44 @@ const PARTNERS_CATEGORIES = [
   }
 ];
 
+function getPartnerGlowColor(name: string): string {
+  const n = name.toLowerCase();
+  
+  // Specific requested colors
+  if (n.includes("pr awards") || n.includes("romanian pr")) return "rgba(219, 39, 119, 0.12)"; // magenta/pink
+  if (n.includes("sloop")) return "rgba(16, 185, 129, 0.12)"; // green
+  if (n.includes("sneaker") || n.includes("snkr")) return "rgba(227, 6, 19, 0.12)"; // red
+  if (n.includes("lensa") || n.includes("cereal")) return "rgba(61, 174, 229, 0.12)"; // blue
+  if (n.includes("startup studio") || n.includes("v7")) return "rgba(234, 179, 8, 0.12)"; // yellow
+  if (n.includes("leaders")) return "rgba(0, 95, 169, 0.12)"; // blue
+  if (n.includes("aspaces")) return "rgba(61, 174, 229, 0.12)"; // blue (cel din poza)
+  if (n.includes("maspex")) return "rgba(227, 6, 19, 0.12)"; // red
+  if (n.includes("l'oréal") || n.includes("loreal")) return "rgba(219, 39, 119, 0.12)"; // magenta
+  if (n.includes("youth center") || n.includes("youth centre")) return "rgba(234, 179, 8, 0.12)"; // yellow
+  if (n.includes("evensys")) return "rgba(132, 204, 22, 0.12)"; // yellow-green (lime)
+  
+  // General brand colors
+  if (n.includes("bcr")) return "rgba(0, 95, 169, 0.12)";
+  if (n.includes("heineken") || n.includes("ursus")) return "rgba(0, 130, 74, 0.12)";
+  if (n.includes("vmax")) return "rgba(227, 6, 19, 0.12)";
+  if (n.includes("spaces")) return "rgba(255, 90, 95, 0.12)";
+  if (n.includes("mindspace")) return "rgba(139, 92, 246, 0.12)";
+  if (n.includes("hipo") || n.includes("trend")) return "rgba(249, 115, 22, 0.12)";
+  if (n.includes("pepsico") || n.includes("danone") || n.includes("fantana") || n.includes("wolt") || n.includes("beluga") || n.includes("zf") || n.includes("financiar") || n.includes("youth")) {
+    return "rgba(61, 174, 229, 0.12)";
+  }
+  if (n.includes("tazz")) return "rgba(255, 51, 102, 0.12)";
+  if (n.includes("berliner") || n.includes("boutique")) return "rgba(255, 105, 180, 0.12)";
+  if (n.includes("gilda")) return "rgba(255, 215, 0, 0.12)";
+  if (n.includes("altfel") || n.includes("true social")) {
+    return "rgba(168, 85, 247, 0.12)";
+  }
+  if (n.includes("coworkperativa") || n.includes("lucram") || n.includes("artesana") || n.includes("voluntx")) {
+    return "rgba(16, 185, 129, 0.12)";
+  }
+  return "rgba(115, 199, 240, 0.1)";
+}
+
 export function ParteneriPage() {
   return (
     <div className="min-h-screen bg-ivory text-dark overflow-x-hidden">
@@ -195,8 +233,12 @@ export function ParteneriPage() {
                   key={p.name}
                   delay={idx * 40}
                   animation="fade-up"
-                  className="group relative aspect-video rounded-3xl border border-indigo-brand/10 bg-white p-5 flex items-center justify-center transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:border-indigo-brand/25 cursor-pointer shadow-sm"
+                  className="group relative aspect-video rounded-3xl border border-indigo-brand/10 bg-white p-5 flex items-center justify-center transition-all duration-500 hover:-translate-y-1.5 hover:shadow-2xl hover:border-indigo-brand/35 cursor-pointer shadow-sm overflow-hidden"
                 >
+                  <div 
+                    className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-3xl" 
+                    style={{ backgroundColor: getPartnerGlowColor(p.name) }}
+                  />
                   <img
                     src={p.logo}
                     alt={`Logo ${p.name}`}

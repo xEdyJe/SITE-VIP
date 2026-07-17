@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import logoVip from "@/assets/logo negru vip.png";
+import logoVip from "@/assets/logo vip.png";
+import logoVipDark from "@/assets/logo dark mode vip nou.png";
 
 const footerLinks = {
   "Organizație": [
@@ -36,23 +37,22 @@ export function SiteFooter() {
         <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <Link to="/" aria-label="VIP Romania">
-              <img src={logoVip} alt="VIP Romania" className="h-12 w-auto object-contain mb-3" />
+              <img src={logoVip} alt="VIP Romania" className="h-12 w-auto object-contain mb-3 dark:hidden" />
+              <img src={logoVipDark} alt="VIP Romania" className="h-12 w-auto object-contain mb-3 hidden dark:block" />
             </Link>
             <p className="text-xs text-dark/40 font-mono tracking-[0.2em] uppercase max-w-xs">
               Voluntari pentru Idei și Proiecte — Est. 1998
             </p>
           </div>
-          <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSeiu5v_t-RCf_pfDm7pa5ohJ_aTicOy2dINeNhTrUQ0XH1MzQ/viewform"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/aplica"
             className="inline-flex items-center gap-2 self-start md:self-end rounded-full bg-indigo-brand px-8 py-3.5 text-xs font-bold uppercase tracking-widest text-white shadow-lg shadow-indigo-brand/20 transition-all hover:brightness-110 active:scale-[0.98]"
           >
             Înscrie-te acum
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="size-4">
               <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </a>
+          </Link>
         </div>
 
         {/* Link columns */}

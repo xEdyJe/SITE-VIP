@@ -171,6 +171,8 @@ function DespreNoiPage() {
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-dark/70" />
+          {/* Brand spotlight glow */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--indigo-brand)/22,transparent_65%)] mix-blend-screen" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ivory" />
         </div>
 
@@ -195,14 +197,12 @@ function DespreNoiPage() {
 
           <ScrollReveal animation="fade-up" delay={450}>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSeiu5v_t-RCf_pfDm7pa5ohJ_aTicOy2dINeNhTrUQ0XH1MzQ/viewform"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/aplica"
                 className="rounded-full bg-indigo-brand px-8 py-4 text-xs font-bold uppercase tracking-widest text-white transition-all hover:brightness-110 shadow-lg shadow-indigo-brand/20 active:scale-[0.98]"
               >
                 Înscrie-te
-              </a>
+              </Link>
               <a
                 href="https://formular230.ro/voluntari-pentru-idei-si-proiecte"
                 target="_blank"
@@ -342,7 +342,7 @@ function DespreNoiPage() {
                   <span className="absolute -left-[9px] top-1.5 flex h-4.5 w-4.5 items-center justify-center rounded-full border border-indigo-brand bg-white">
                     <span className="h-1.5 w-1.5 rounded-full bg-indigo-brand animate-pulse" />
                   </span>
-                  
+
                   {/* Timeline content */}
                   <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
                     <span className="font-mono text-2xl font-black tracking-tight text-indigo-brand leading-none">

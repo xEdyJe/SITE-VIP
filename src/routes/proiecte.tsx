@@ -125,6 +125,21 @@ const TESTIMONIALS = [
 ];
 
 export function ProiectePage() {
+  const getCommunityTextColor = (com: string) => {
+    switch (com) {
+      case "Business Club":
+        return "text-orange-500";
+      case "Econosofia":
+        return "text-sky-500";
+      case "International Affairs":
+        return "text-purple-500";
+      case "Leadership Development":
+        return "text-emerald-500";
+      default:
+        return "text-indigo-brand/80";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-ivory text-dark overflow-x-hidden">
       <SiteNav />
@@ -138,7 +153,9 @@ export function ProiectePage() {
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-dark/65" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ivory" />
+          {/* Brand spotlight glow */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--indigo-brand)/22,transparent_65%)] mix-blend-screen" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white hero-bottom-fade-white" />
         </div>
 
         <div className="relative z-10 mx-auto max-w-4xl px-6 py-32 text-center text-ivory">
@@ -163,7 +180,7 @@ export function ProiectePage() {
       </section>
 
       {/* INTRO GRID INFO */}
-      <section className="bg-white py-16 md:py-24 border-t border-dark/5">
+      <section className="bg-white py-16 md:py-24 border-t border-dark/12">
         <div className="container mx-auto px-6 max-w-5xl text-center md:text-left">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <ScrollReveal animation="fade-up">
@@ -188,7 +205,7 @@ export function ProiectePage() {
       </section>
 
       {/* PROJECTS LIST */}
-      <section className="bg-ivory py-16 md:py-24 border-t border-dark/5">
+      <section className="bg-ivory py-16 md:py-24 border-t border-dark/12">
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="flex flex-col gap-16 md:gap-24">
             {PROJECTS.map((proj, idx) => {
@@ -198,9 +215,8 @@ export function ProiectePage() {
                   key={proj.title}
                   delay={100}
                   animation="fade-up"
-                  className={`flex flex-col gap-8 md:gap-12 items-center ${
-                    isEven ? "md:flex-row" : "md:flex-row-reverse"
-                  }`}
+                  className={`flex flex-col gap-8 md:gap-12 items-center ${isEven ? "md:flex-row" : "md:flex-row-reverse"
+                    }`}
                 >
                   {/* Image Column */}
                   <div className="w-full md:w-[40%] flex justify-center">
@@ -291,7 +307,7 @@ export function ProiectePage() {
                         <p className="text-[11px] font-bold text-indigo-brand/70 uppercase tracking-wider mt-0.5">{t.role}</p>
                       </div>
                       <div className="text-left sm:text-right mt-1 sm:mt-0 font-mono text-[9px] text-dark/40 uppercase">
-                        Comunitate: <span className="font-bold text-indigo-brand/80">{t.com}</span> · An: <span className="font-bold text-dark/80">{t.year}</span>
+                        Comunitate: <span className={`font-bold ${getCommunityTextColor(t.com)}`}>{t.com}</span> · An: <span className="font-bold text-dark/80">{t.year}</span>
                       </div>
                     </div>
                     <p className="mt-4 text-xs text-dark/70 leading-relaxed md:text-sm font-normal italic">
