@@ -9,15 +9,13 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-// Create client with PKCE flow enabled — prevents access_token from appearing in the URL hash.
-// With PKCE, Google redirects back with ?code=... (query param) instead of #access_token=...
-// The Supabase SDK automatically exchanges the code for a session behind the scenes.
+// Using implicit flow (default) for reliable session detection in SPAs.
+// detectSessionInUrl automatically reads the #access_token from the URL after OAuth redirect.
 export const supabase = createClient(
   supabaseUrl || "https://placeholder.supabase.co",
   supabaseAnonKey || "placeholder-anon-key",
   {
     auth: {
-      flowType: "pkce",
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: true,
