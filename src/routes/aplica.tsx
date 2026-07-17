@@ -418,7 +418,13 @@ function AplicaPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
+          // With PKCE flow, Supabase will redirect back with ?code=... instead of #access_token=...
+          // The SDK automatically exchanges the code for a session via detectSessionInUrl.
           redirectTo: window.location.origin + "/aplica",
+          queryParams: {
+            access_type: "offline",
+            prompt: "select_account",
+          },
         },
       });
       if (error) throw error;

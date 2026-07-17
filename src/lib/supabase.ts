@@ -9,8 +9,18 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-// Create client (with fallback if keys are missing to prevent crash on compile)
+// Create client with PKCE flow enabled — prevents access_token from appearing in the URL hash.
+// With PKCE, Google redirects back with ?code=... (query param) instead of #access_token=...
+// The Supabase SDK automatically exchanges the code for a session behind the scenes.
 export const supabase = createClient(
   supabaseUrl || "https://placeholder.supabase.co",
-  supabaseAnonKey || "placeholder-anon-key"
+  supabaseAnonKey || "placeholder-anon-key",
+  {
+    auth: {
+      flowType: "pkce",
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true,
+    },
+  }
 );
