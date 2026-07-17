@@ -255,8 +255,11 @@ function AplicaPage() {
         if (isAuthCallback) {
           window.history.replaceState({}, "", window.location.pathname);
         }
+        setLoadingUser(false);
+      } else if (!isAuthCallback) {
+        // Only stop loading if there's no session AND we're not waiting for a token
+        setLoadingUser(false);
       }
-      setLoadingUser(false);
     });
 
     // getSession() triggers detectSessionInUrl
