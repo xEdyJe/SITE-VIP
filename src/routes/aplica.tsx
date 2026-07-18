@@ -8,7 +8,11 @@ import { initAnalytics, trackStep, trackSubmission } from "@/lib/analytics";
 
 const aplicaSearchSchema = z.object({
   community: z.string().optional(),
-});
+  code: z.string().optional(),
+  state: z.string().optional(),
+  error: z.string().optional(),
+  error_description: z.string().optional(),
+}).passthrough();
 
 export const Route = createFileRoute("/aplica")({
   validateSearch: aplicaSearchSchema,
@@ -147,7 +151,7 @@ function fireConfetti() {
 }
 
 function AplicaPage() {
-  const { community } = Route.useSearch();
+  const { community, code, error: authError, error_description: authErrorDesc } = Route.useSearch();
 
   // ── Auth states ──
   const [user, setUser] = useState<any>(null);
@@ -230,8 +234,7 @@ function AplicaPage() {
 
   // ── Supabase Auth listener ──
   useEffect(() => {
-    const isMock = supabase.auth.constructor.name === "GoTrueClient" && 
-      (supabase.auth as any).url?.includes("placeholder.supabase.co");
+    const isMock = (supabase.auth as any).url?.includes("placeholder.supabase.co");
 
     if (isMock) {
       setUseLocalStorageFallback(true);
@@ -239,18 +242,18 @@ function AplicaPage() {
       return;
     }
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        setFormData(prev => ({
-          ...prev,
-          email: session.user.email || prev.email,
-          fullName: session.user.user_metadata?.full_name || prev.fullName,
-        }));
+    const cleanUrl = () => {
+      if (window.location.search.includes("code=") || window.location.search.includes("error=")) {
+        const url = new URL(window.location.href);
+        url.searchParams.delete("code");
+        url.searchParams.delete("state");
+        url.searchParams.delete("error");
+        url.searchParams.delete("error_description");
+        window.history.replaceState({}, "", url.pathname + url.search);
       }
-      setLoadingUser(false);
-    });
+    };
 
+    // 1. Subscribe first to catch auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
@@ -259,12 +262,70 @@ function AplicaPage() {
           email: session.user.email || prev.email,
           fullName: session.user.user_metadata?.full_name || prev.fullName,
         }));
+        cleanUrl();
       }
       setLoadingUser(false);
     });
 
+    // Handle authentication error redirected from Supabase
+    if (authError) {
+      console.error("[Auth] Google sign-in failed:", authError, authErrorDesc);
+      alert(`Autentificarea a eșuat: ${authErrorDesc || authError}`);
+      cleanUrl();
+      setLoadingUser(false);
+      return;
+    }
+
+    // 2. Perform exchange or retrieve session
+    if (code) {
+      // Exchange the PKCE authorization code manually.
+      // Doing this explicitly is 100% reliable with TanStack Router.
+      console.log("[Auth] Exchanging code for session manually:", code);
+      supabase.auth.exchangeCodeForSession(code)
+        .then(({ data, error }) => {
+          if (error) {
+            console.error("[Auth] PKCE exchange error:", error);
+            alert(`Schimbul de cod PKCE a eșuat: ${error.message} (${error.status})`);
+            setLoadingUser(false);
+            return;
+          }
+
+          const session = data?.session;
+          if (session?.user) {
+            console.log("[Auth] Manual exchange succeeded, user:", session.user.email);
+            setUser(session.user);
+            setFormData(prev => ({
+              ...prev,
+              email: session.user.email || prev.email,
+              fullName: session.user.user_metadata?.full_name || prev.fullName,
+            }));
+            cleanUrl();
+          } else {
+            console.warn("[Auth] Manual exchange succeeded but no session/user was returned");
+          }
+          setLoadingUser(false);
+        })
+        .catch((err) => {
+          console.error("[Auth] PKCE exchange network failure:", err);
+          alert(`Schimbul de cod PKCE a eșuat (rețea): ${err.message || JSON.stringify(err)}`);
+          setLoadingUser(false);
+        });
+    } else {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session?.user) {
+          setUser(session.user);
+          setFormData(prev => ({
+            ...prev,
+            email: session.user.email || prev.email,
+            fullName: session.user.user_metadata?.full_name || prev.fullName,
+          }));
+        }
+        setLoadingUser(false);
+      });
+    }
+
     return () => subscription.unsubscribe();
-  }, []);
+  }, [code, authError, authErrorDesc]);
 
   // ── Check if user has already submitted ──
   useEffect(() => {
@@ -399,18 +460,23 @@ function AplicaPage() {
   }, [activeStep]);
 
   // ── Auth handlers ──
+  const enableOfflineMode = () => {
+    setUseLocalStorageFallback(true);
+    setUser({
+      id: "local-user-id",
+      email: "",
+      user_metadata: { full_name: "" },
+    });
+    setFormData(prev => ({
+      ...prev,
+      email: "",
+      fullName: "",
+    }));
+  };
+
   const handleGoogleLogin = async () => {
     if (useLocalStorageFallback) {
-      setUser({
-        id: "local-user-id",
-        email: "test.student@gmail.com",
-        user_metadata: { full_name: "Student VIP" },
-      });
-      setFormData(prev => ({
-        ...prev,
-        email: "test.student@gmail.com",
-        fullName: "Student VIP",
-      }));
+      enableOfflineMode();
       return;
     }
 
@@ -741,7 +807,7 @@ function AplicaPage() {
                 Timp de completare estimat: 5 min
               </span>
               <button 
-                onClick={() => setUseLocalStorageFallback(true)}
+                onClick={enableOfflineMode}
                 className="text-[9px] font-bold text-indigo-brand/60 hover:text-indigo-brand uppercase tracking-wider cursor-pointer mt-2 underline"
               >
                 Nu doresc salvarea online (utilizează browser local)
@@ -879,10 +945,19 @@ function AplicaPage() {
                       name="email"
                       type="email"
                       value={formData.email}
-                      disabled
-                      className="w-full rounded-xl border border-dark/10 bg-ivory/30 px-4 py-3 text-sm text-dark/50 outline-none cursor-not-allowed"
+                      onChange={handleInputChange}
+                      disabled={!useLocalStorageFallback}
+                      className={`w-full rounded-xl border px-4 py-3 text-sm outline-none ${
+                        useLocalStorageFallback 
+                          ? "bg-white border-dark/10 text-dark" 
+                          : "bg-ivory/30 border-dark/10 text-dark/50 cursor-not-allowed"
+                      }`}
                     />
-                    <p className="text-[9px] text-dark/45">Email pre-furnizat de Google.</p>
+                    <p className="text-[9px] text-dark/45">
+                      {useLocalStorageFallback 
+                        ? "Te rugăm să introduci adresa ta de email." 
+                        : "Email pre-furnizat de Google."}
+                    </p>
                   </div>
                   <Field
                     label="Telefon"
