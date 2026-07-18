@@ -157,6 +157,7 @@ function AplicaPage() {
   const [user, setUser] = useState<any>(null);
   const [loadingUser, setLoadingUser] = useState(true);
   const [useLocalStorageFallback, setUseLocalStorageFallback] = useState(false);
+  const [authErrorMessage, setAuthErrorMessage] = useState<string | null>(null);
 
   // ── Check submission state ──
   const [hasSubmittedBefore, setHasSubmittedBefore] = useState(false);
@@ -270,7 +271,7 @@ function AplicaPage() {
     // Handle authentication error redirected from Supabase
     if (authError) {
       console.error("[Auth] Google sign-in failed:", authError, authErrorDesc);
-      alert(`Autentificarea a eșuat: ${authErrorDesc || authError}`);
+      setAuthErrorMessage(authErrorDesc || authError);
       cleanUrl();
       setLoadingUser(false);
       return;
@@ -285,7 +286,7 @@ function AplicaPage() {
         .then(({ data, error }) => {
           if (error) {
             console.error("[Auth] PKCE exchange error:", error);
-            alert(`Schimbul de cod PKCE a eșuat: ${error.message} (${error.status})`);
+            setAuthErrorMessage(error.message);
             setLoadingUser(false);
             return;
           }
@@ -307,7 +308,7 @@ function AplicaPage() {
         })
         .catch((err) => {
           console.error("[Auth] PKCE exchange network failure:", err);
-          alert(`Schimbul de cod PKCE a eșuat (rețea): ${err.message || JSON.stringify(err)}`);
+          setAuthErrorMessage(err.message || "Eroare de rețea la schimbul de cod.");
           setLoadingUser(false);
         });
     } else {
@@ -480,6 +481,8 @@ function AplicaPage() {
       return;
     }
 
+    setAuthErrorMessage(null);
+
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
@@ -489,7 +492,7 @@ function AplicaPage() {
       });
       if (error) throw error;
     } catch (err: any) {
-      alert("Autentificarea Google a eșuat. Puteți încerca în mod local.");
+      setAuthErrorMessage("Autentificarea Google a eșuat. Puteți încerca în mod local.");
       console.error("Google login error:", err.message);
       setUseLocalStorageFallback(true);
     }
@@ -783,6 +786,12 @@ function AplicaPage() {
           </header>
 
           <div className="mx-auto mt-10 w-full max-w-sm rounded-[2rem] border border-dark/5 bg-white p-8 shadow-sm flex flex-col items-center">
+            {authErrorMessage && (
+              <div className="w-full mb-6 rounded-2xl border border-red-200 bg-red-50 p-4.5 text-xs text-red-600 animate-fade-up text-left">
+                <p className="font-bold uppercase tracking-wider mb-1">Eroare Conectare:</p>
+                <p>{authErrorMessage}</p>
+              </div>
+            )}
             <button
               onClick={handleGoogleLogin}
               className="w-full flex items-center justify-center gap-3 rounded-xl border border-dark/15 bg-white hover:bg-ivory/30 px-6 py-4 text-xs font-bold uppercase tracking-widest text-dark transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer shadow-sm"
