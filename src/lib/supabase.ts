@@ -9,17 +9,8 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-// Using implicit flow (default) for reliable session detection in SPAs.
-// detectSessionInUrl automatically reads the #access_token from the URL after OAuth redirect.
+// Create client (with fallback if keys are missing to prevent crash on compile)
 export const supabase = createClient(
   supabaseUrl || "https://placeholder.supabase.co",
-  supabaseAnonKey || "placeholder-anon-key",
-  {
-    auth: {
-      autoRefreshToken: true,
-      persistSession: true,
-      detectSessionInUrl: true,
-      flowType: "implicit",
-    },
-  }
+  supabaseAnonKey || "placeholder-anon-key"
 );

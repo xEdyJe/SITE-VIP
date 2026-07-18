@@ -230,7 +230,8 @@ function AplicaPage() {
 
   // ── Supabase Auth listener ──
   useEffect(() => {
-    const isMock = (supabase.auth as any).url?.includes("placeholder.supabase.co");
+    const isMock = supabase.auth.constructor.name === "GoTrueClient" && 
+      (supabase.auth as any).url?.includes("placeholder.supabase.co");
 
     if (isMock) {
       setUseLocalStorageFallback(true);
@@ -238,66 +239,31 @@ function AplicaPage() {
       return;
     }
 
-    // Safety timeout — if nothing resolves in 8s, stop spinning and show login
-    const timeout = setTimeout(() => {
-      setLoadingUser(false);
-    }, 8000);
-
-    const applySession = (session: { user: any } | null) => {
-      clearTimeout(timeout);
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
       if (session?.user) {
-        setUser(session.user);
         setFormData(prev => ({
           ...prev,
           email: session.user.email || prev.email,
           fullName: session.user.user_metadata?.full_name || prev.fullName,
         }));
-        // Clean the URL bar (remove hash tokens)
-        if (window.location.hash) {
-          window.history.replaceState({}, "", window.location.pathname);
-        }
       }
       setLoadingUser(false);
-    };
-
-    // Listen for all auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      applySession(session);
     });
 
-    // Check if URL hash contains access_token (implicit flow callback)
-    const hash = window.location.hash;
-    if (hash.includes("access_token=")) {
-      // Parse the hash params manually
-      const params = new URLSearchParams(hash.substring(1)); // remove leading #
-      const access_token = params.get("access_token");
-      const refresh_token = params.get("refresh_token") || "";
-
-      if (access_token) {
-        // Manually set the session — most reliable way to handle implicit flow
-        supabase.auth.setSession({ access_token, refresh_token })
-          .then(({ data }) => {
-            applySession(data.session);
-          })
-          .catch(() => {
-            clearTimeout(timeout);
-            setLoadingUser(false);
-          });
-      } else {
-        clearTimeout(timeout);
-        setLoadingUser(false);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      if (session?.user) {
+        setFormData(prev => ({
+          ...prev,
+          email: session.user.email || prev.email,
+          fullName: session.user.user_metadata?.full_name || prev.fullName,
+        }));
       }
-    } else {
-      // No OAuth callback — check for an existing persisted session
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        applySession(session);
-      });
-    }
+      setLoadingUser(false);
+    });
 
-    return () => {
-      subscription.unsubscribe();
-      clearTimeout(timeout);
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
   // ── Check if user has already submitted ──
@@ -433,23 +399,18 @@ function AplicaPage() {
   }, [activeStep]);
 
   // ── Auth handlers ──
-  const enableOfflineMode = () => {
-    setUseLocalStorageFallback(true);
-    setUser({
-      id: "local-user-id",
-      email: "test.student@gmail.com",
-      user_metadata: { full_name: "Student VIP" },
-    });
-    setFormData(prev => ({
-      ...prev,
-      email: "test.student@gmail.com",
-      fullName: "Student VIP",
-    }));
-  };
-
   const handleGoogleLogin = async () => {
     if (useLocalStorageFallback) {
-      enableOfflineMode();
+      setUser({
+        id: "local-user-id",
+        email: "test.student@gmail.com",
+        user_metadata: { full_name: "Student VIP" },
+      });
+      setFormData(prev => ({
+        ...prev,
+        email: "test.student@gmail.com",
+        fullName: "Student VIP",
+      }));
       return;
     }
 
@@ -457,13 +418,7 @@ function AplicaPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          // With PKCE flow, Supabase will redirect back with ?code=... instead of #access_token=...
-          // The SDK automatically exchanges the code for a session via detectSessionInUrl.
           redirectTo: window.location.origin + "/aplica",
-          queryParams: {
-            access_type: "offline",
-            prompt: "select_account",
-          },
         },
       });
       if (error) throw error;
@@ -786,7 +741,7 @@ function AplicaPage() {
                 Timp de completare estimat: 5 min
               </span>
               <button 
-                onClick={enableOfflineMode}
+                onClick={() => setUseLocalStorageFallback(true)}
                 className="text-[9px] font-bold text-indigo-brand/60 hover:text-indigo-brand uppercase tracking-wider cursor-pointer mt-2 underline"
               >
                 Nu doresc salvarea online (utilizează browser local)
