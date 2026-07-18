@@ -230,8 +230,7 @@ function AplicaPage() {
 
   // ── Supabase Auth listener ──
   useEffect(() => {
-    const isMock = supabase.auth.constructor.name === "GoTrueClient" && 
-      (supabase.auth as any).url?.includes("placeholder.supabase.co");
+    const isMock = (supabase.auth as any).url?.includes("placeholder.supabase.co");
 
     if (isMock) {
       setUseLocalStorageFallback(true);
@@ -239,31 +238,13 @@ function AplicaPage() {
       return;
     }
 
-    // Detect if we're on an OAuth callback (PKCE uses ?code=, implicit uses #access_token=)
-    const isAuthCallback = window.location.hash.includes("access_token=") || window.location.search.includes("code=");
+    // Safety timeout — if nothing resolves in 8s, stop spinning and show login
+    const timeout = setTimeout(() => {
+      setLoadingUser(false);
+    }, 8000);
 
-    // Subscribe first so we catch any auth events that fire during getSession()
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        setFormData(prev => ({
-          ...prev,
-          email: session.user.email || prev.email,
-          fullName: session.user.user_metadata?.full_name || prev.fullName,
-        }));
-        // Clean up token hash or code from URL bar
-        if (isAuthCallback) {
-          window.history.replaceState({}, "", window.location.pathname);
-        }
-        setLoadingUser(false);
-      } else if (!isAuthCallback) {
-        // Only stop loading if there's no session AND we're not waiting for a token
-        setLoadingUser(false);
-      }
-    });
-
-    // getSession() triggers detectSessionInUrl
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const applySession = (session: { user: any } | null) => {
+      clearTimeout(timeout);
       if (session?.user) {
         setUser(session.user);
         setFormData(prev => ({
@@ -271,19 +252,52 @@ function AplicaPage() {
           email: session.user.email || prev.email,
           fullName: session.user.user_metadata?.full_name || prev.fullName,
         }));
-        if (isAuthCallback) {
+        // Clean the URL bar (remove hash tokens)
+        if (window.location.hash) {
           window.history.replaceState({}, "", window.location.pathname);
         }
-        setLoadingUser(false);
-      } else if (!isAuthCallback) {
-        // If there's no session AND we're not waiting for a callback to process,
-        // then we safely show the login screen.
-        setLoadingUser(false);
       }
-      // If isAuthCallback is true, we wait for onAuthStateChange to fire.
+      setLoadingUser(false);
+    };
+
+    // Listen for all auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      applySession(session);
     });
 
-    return () => subscription.unsubscribe();
+    // Check if URL hash contains access_token (implicit flow callback)
+    const hash = window.location.hash;
+    if (hash.includes("access_token=")) {
+      // Parse the hash params manually
+      const params = new URLSearchParams(hash.substring(1)); // remove leading #
+      const access_token = params.get("access_token");
+      const refresh_token = params.get("refresh_token") || "";
+
+      if (access_token) {
+        // Manually set the session — most reliable way to handle implicit flow
+        supabase.auth.setSession({ access_token, refresh_token })
+          .then(({ data }) => {
+            applySession(data.session);
+          })
+          .catch(() => {
+            clearTimeout(timeout);
+            setLoadingUser(false);
+          });
+      } else {
+        clearTimeout(timeout);
+        setLoadingUser(false);
+      }
+    } else {
+      // No OAuth callback — check for an existing persisted session
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        applySession(session);
+      });
+    }
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   // ── Check if user has already submitted ──
