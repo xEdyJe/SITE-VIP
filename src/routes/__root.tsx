@@ -82,27 +82,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "VIP Romania — Unde excepționalul prinde aripi" },
+      { title: "VIP Romania" },
       {
         name: "description",
-        content:
-          "VIP Romania este comunitatea studenților ambițioși care modelează viitorul elitei românești prin patru piloni: Business, Econosofia, International Affairs și Leadership.",
+        content: "Transformăm potențialul în excepțional.",
       },
       { name: "author", content: "VIP Romania" },
-      { property: "og:title", content: "VIP Romania — Unde excepționalul prinde aripi" },
+      { property: "og:title", content: "VIP Romania" },
       {
         property: "og:description",
-        content:
-          "Cea mai influentă organizație de studenți din România. Patru comunități, un singur standard de excelență.",
+        content: "Transformăm potențialul în excepțional.",
       },
+      { property: "og:image", content: "https://site-vip-steel.vercel.app/logo-vip.png" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "ro_RO" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "VIP Romania — Unde excepționalul prinde aripi" },
+      { name: "twitter:title", content: "VIP Romania" },
       {
         name: "twitter:description",
-        content: "Patru comunități, un singur standard de excelență. Aplică pentru seria viitoare.",
+        content: "Transformăm potențialul în excepțional.",
       },
+      { name: "twitter:image", content: "https://site-vip-steel.vercel.app/logo-vip.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

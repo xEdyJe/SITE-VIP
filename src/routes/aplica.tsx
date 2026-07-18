@@ -21,15 +21,21 @@ export const Route = createFileRoute("/aplica")({
       { title: "Aplică — VIP Romania" },
       {
         name: "description",
-        content:
-          "Depune aplicația pentru noua serie VIP Romania. Alătură-te celei mai influente comunități de studenți din România.",
+        content: "Transformăm potențialul în excepțional.",
       },
       { property: "og:title", content: "Aplică — VIP Romania" },
       {
         property: "og:description",
-        content:
-          "Formularul de admitere pentru VIP Romania. Business, Econosofia, International Affairs, Leadership.",
+        content: "Transformăm potențialul în excepțional.",
       },
+      { property: "og:image", content: "https://site-vip-steel.vercel.app/logo-vip.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Aplică — VIP Romania" },
+      {
+        name: "twitter:description",
+        content: "Transformăm potențialul în excepțional.",
+      },
+      { name: "twitter:image", content: "https://site-vip-steel.vercel.app/logo-vip.png" },
       { name: "robots", content: "index, follow" },
     ],
   }),
